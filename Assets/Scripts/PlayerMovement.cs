@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float speed = 8f;
     private float jumpingPower = 10f;
+    private int numOfJump = 0;
+    public int maxNumOfJump = 2;
     private bool isFacingRight = true;
     private bool shotCooldown;
     private float projectileFireRate = 1.5f;
@@ -17,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    [SerializeField] private Transform groundCheck;
+    private CapsuleCollider2D groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private GameObject projectilePrefab;
     
@@ -25,18 +27,28 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        groundCheck = transform.Find("Ground Check");
+        groundCheck = GetComponent<CapsuleCollider2D>();
+    }
+    
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        
+        if (Input.GetButtonDown("Jump") )
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            numOfJump++;
+            if (numOfJump < maxNumOfJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                Debug.Log("numOfJump: " + numOfJump + "\n isGrounded: " + IsGrounded());
+            }
         }
-
+        
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
@@ -47,7 +59,11 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(fireProjectile());
         }
         
-
+        if (IsGrounded())
+        {
+            numOfJump = 0;
+        }
+        
         Flip();
     }
     
@@ -74,16 +90,10 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForSeconds(0.2f); // Wait for 0.2 seconds between each shot
         }
     }
-    
-
-    private void FixedUpdate()
-    {
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-    }
 
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return groundCheck.IsTouchingLayers(groundLayer);
     }
 
     private void Flip()
