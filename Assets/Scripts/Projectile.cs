@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -9,20 +8,16 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private float interval = 0.5f;
     
-    private SpriteRenderer sr;
     private Rigidbody2D rb;
     
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
         Destroy(gameObject, lifeTime);
     }
     
     private void FixedUpdate()
     {
         transform.Translate( moveDirection * (moveSpeed * Time.deltaTime));
-        
-        
     }
     
 }
