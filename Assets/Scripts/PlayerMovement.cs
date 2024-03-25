@@ -6,19 +6,18 @@ using UnityEngine;
  * TODO:
  * 1. Add health system √
  * 2. Add sword attack √
- *      i. Collision system
- * 3. Add ninjutsu attack
+ *      i. Collision system 
+ * 3. Add ninjutsu attack √
  *     i. Fire √
  *    ii. Ice √
  * 4. Add potion √
- * 5. Add enemy
- *    i. Health system
- *   ii. Attack system
- *       a. Collision Checking
- *  iii. Movement system
- * 6. Level design
- *      i. Add finish line
- *      ii. Add instructions (UI);
+ * 5. Add enemy 
+ *    i. Health system 
+ *   ii. Attack system *****
+ *       a. Collision Checking 
+ * 6. Level design 
+ *      i. Add finish line 
+ *      ii. Add instructions (UI) 
  */
 
 public class PlayerMovement : MonoBehaviour
