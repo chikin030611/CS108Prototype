@@ -231,4 +231,24 @@ public class PlayerMovement : MonoBehaviour
             sr.flipX = !sr.flipX;
         }
     }
+
+    public void Heal(bool isHealthPotion, int heal)
+    {
+        if (isHealthPotion)
+        {
+            health += heal;
+            if (health > maxHealth)
+            {
+                health = maxHealth;
+            }
+        }
+        else
+        {
+            ki += heal;
+            if (ki > maxKi)
+            {
+                ki = maxKi;
+            }
+        }
+    }
 }
