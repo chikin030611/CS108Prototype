@@ -4,15 +4,21 @@ using UnityEngine;
 
 /*
  * TODO:
- * 1. Add health system
- * 2. Add sword attack
+ * 1. Add health system √
+ * 2. Add sword attack √
  *      i. Collision system
  * 3. Add ninjutsu attack
- * 4. Add potion
+ *     i. Fire √
+ *    ii. Ice √
+ * 4. Add potion √
  * 5. Add enemy
+ *    i. Health system
+ *   ii. Attack system
+ *       a. Collision Checking
+ *  iii. Movement system
  * 6. Level design
  *      i. Add finish line
- *      ii. Add instructions
+ *      ii. Add instructions (UI);
  */
 
 public class PlayerMovement : MonoBehaviour
@@ -52,45 +58,15 @@ public class PlayerMovement : MonoBehaviour
     private LayerMask groundLayer;
     [SerializeField] private GameObject projectilePrefab;
     
-    public int GetHealth()
-    {
-        return health;
-    }
+    public int GetHealth() { return health; }
+    public int GetMaxHealth() { return maxHealth; }
+    public int GetKi() { return ki; }
+    public int GetMaxKi() { return maxKi; }
     
-    public int GetMaxHealth()
-    {
-        return maxHealth;
-    }
-    
-    public int GetKi()
-    {
-        return ki;
-    }
-    
-    public int GetMaxKi()
-    {
-        return maxKi;
-    }
-    
-    public void SetHealth(int health)
-    {
-        this.health = health;
-    }
-    
-    public void SetMaxHealth(int maxHealth)
-    {
-        this.maxHealth = maxHealth;
-    }
-    
-    public void SetKi(int ki)
-    {
-        this.ki = ki;
-    }
-    
-    public void SetMaxKi(int maxKi)
-    {
-        this.maxKi = maxKi;
-    }
+    public void SetHealth(int health) { this.health = health; }
+    public void SetMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
+    public void SetKi(int ki) { this.ki = ki; }
+    public void SetMaxKi(int maxKi) { this.maxKi = maxKi; }
     
     void Start()
     {
@@ -114,8 +90,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(health);
-        
         // Input
         horizontal = Input.GetAxisRaw("Horizontal");
         anim.SetBool("isRunning", horizontal != 0);
@@ -151,9 +125,9 @@ public class PlayerMovement : MonoBehaviour
         // Use Sword Attack
         if (Input.GetButtonDown("Sword"))
         {
-            float x = shotDir.x;
-            float y = shotDir.y;
-            Instantiate(swordCollision, transform.position + new Vector3(x, y, 0), Quaternion.identity);
+            Instantiate(swordCollision, 
+                transform.position + new Vector3(shotDir.x, shotDir.y, 0), 
+                Quaternion.identity);        
         }
         
         // Fire Projectile
@@ -175,7 +149,9 @@ public class PlayerMovement : MonoBehaviour
         // Ice Ninjutsu
         if (Input.GetButtonDown("Ice") && ki > 0 && IsGrounded())
         {
-            Instantiate(IceNinjutsu);
+            float rotation = sr.flipX ? 1 : -1;
+            StartCoroutine(IceNinjutsuPattern(rotation));
+
             ki--;
         }
         
@@ -212,6 +188,21 @@ public class PlayerMovement : MonoBehaviour
             prefab.transform.position = transform.position;
             prefab.GetComponent<Projectile>().moveDirection = direction;
             yield return new WaitForSeconds(0.2f); // Wait for 0.2 seconds between each shot
+        }
+    }
+    
+    // Ice Ninjutsu Pattern
+    IEnumerator IceNinjutsuPattern(float rotation)
+    {
+        Vector3 position = transform.position;
+        float x = shotDir.x;
+        float y = shotDir.y;
+        for (int i = 0; i < 3; i++)
+        {
+            Instantiate(IceNinjutsu,
+                position + new Vector3(x + i * -rotation * 2, y, 0),
+                new Quaternion(0, 0, 90, rotation * 45));
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
