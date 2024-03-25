@@ -18,10 +18,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Character Variables
-    public int health;
-    public int maxHealth = 3;
-    public int ki;
-    public int maxKi = 3;
+    private int health;
+    private int maxHealth = 3;
+    private int ki;
+    private int maxKi = 3;
     
     // Movement variables
     private float horizontal;
@@ -52,6 +52,46 @@ public class PlayerMovement : MonoBehaviour
     private LayerMask groundLayer;
     [SerializeField] private GameObject projectilePrefab;
     
+    public int GetHealth()
+    {
+        return health;
+    }
+    
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+    
+    public int GetKi()
+    {
+        return ki;
+    }
+    
+    public int GetMaxKi()
+    {
+        return maxKi;
+    }
+    
+    public void SetHealth(int health)
+    {
+        this.health = health;
+    }
+    
+    public void SetMaxHealth(int maxHealth)
+    {
+        this.maxHealth = maxHealth;
+    }
+    
+    public void SetKi(int ki)
+    {
+        this.ki = ki;
+    }
+    
+    public void SetMaxKi(int maxKi)
+    {
+        this.maxKi = maxKi;
+    }
+    
     void Start()
     {
         // Initialize Variables
@@ -74,6 +114,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(health);
+        
         // Input
         horizontal = Input.GetAxisRaw("Horizontal");
         anim.SetBool("isRunning", horizontal != 0);
