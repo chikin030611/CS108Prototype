@@ -452,7 +452,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1231895369}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2d41bec1e17b14a2483e27b1166fda66, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -475,8 +475,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.011873056, y: -0.5957945}
-  m_Size: {x: 0.7858472, y: 0.25013497}
+  m_Offset: {x: 0.011873057, y: -0.5867128}
+  m_Size: {x: 0.7858474, y: 0.23197165}
   m_Direction: 1
 --- !u!95 &1231895378
 Animator:
@@ -1351,9 +1351,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2965530357252572924, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: FireNinjutsu
+      value: 
+      objectReference: {fileID: 8736020041361787813, guid: 66b6b9d8024d44bbe8f279f1870b9e86, type: 3}
+    - target: {fileID: 2965530357252572924, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
       propertyPath: jumpingPower
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2965530357252572924, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: swordCollision
+      value: 
+      objectReference: {fileID: 6503563835680952964, guid: 1bebeb30990594c0fbc216f1e4110465, type: 3}
     - target: {fileID: 2965530357252572924, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
       propertyPath: projectilePrefab
       value: 
@@ -1383,8 +1391,32 @@ PrefabInstance:
       value: 1.0444608
       objectReference: {fileID: 0}
     - target: {fileID: 4521659875922736132, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_Size.y
+      value: 1.3750005
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521659875922736132, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521659875922736132, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521659875922736132, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
       propertyPath: m_Offset.x
       value: -0.00000023841858
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521659875922736132, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.00000023841858
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521659875922736132, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4521659875922736132, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_LayerOverridePriority
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7180096218068368596, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1425,6 +1457,26 @@ PrefabInstance:
     - target: {fileID: 7180096218068368596, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007889167366937705, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007889167366937705, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 2d41bec1e17b14a2483e27b1166fda66, type: 2}
+    - target: {fileID: 8007889167366937705, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007889167366937705, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007889167366937705, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

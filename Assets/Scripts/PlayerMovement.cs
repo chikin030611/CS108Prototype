@@ -31,6 +31,14 @@ public class PlayerMovement : MonoBehaviour
     public int maxNumOfJump = 2;
     private bool isFacingRight = true;
     
+    // Sword Attack Variables
+    [SerializeField] private float attackRange = 0.5f;
+    [SerializeField] private GameObject swordCollision;
+    
+    // Ninjutsu Attack Variables
+    [SerializeField] private GameObject FireNinjutsu;
+    [SerializeField] private GameObject IceNinjutsu;
+    
     // Projectile Variables
     private bool shotCooldown;
     private float projectileFireRate = 1.5f;
@@ -98,10 +106,34 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isJumping", true);
         }
         
+        // Use Sword Attack
+        if (Input.GetButtonDown("Sword"))
+        {
+            float x = shotDir.x;
+            float y = shotDir.y;
+            Instantiate(swordCollision, transform.position + new Vector3(x, y, 0), Quaternion.identity);
+        }
+        
         // Fire Projectile
-        if (Input.GetButtonDown("Fire1") && !shotCooldown && ki > 0)
+        if (Input.GetButtonDown("Shuriken") && !shotCooldown && ki > 0)
         {
             StartCoroutine(fireProjectile());
+            ki--;
+        }
+        
+        // Fire Ninjutsu
+        if (Input.GetButtonDown("Fire") && ki > 0)
+        {
+            GameObject prefab = Instantiate(FireNinjutsu);
+            prefab.transform.position = transform.position;
+            prefab.GetComponent<Projectile>().moveDirection = shotDir;
+            ki--;
+        }
+        
+        // Ice Ninjutsu
+        if (Input.GetButtonDown("Ice") && ki > 0 && IsGrounded())
+        {
+            Instantiate(IceNinjutsu);
             ki--;
         }
         
