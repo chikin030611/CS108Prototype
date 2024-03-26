@@ -390,7 +390,7 @@ RectTransform:
   m_Children:
   - {fileID: 1871149664}
   - {fileID: 118799349}
-  m_Father: {fileID: 1231895373}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2143,9 +2143,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7180096218068368596, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 519420032}
-    - targetCorrespondingSourceObject: {fileID: 7180096218068368596, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 168166178}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1587705197204780828, guid: 63ba4336ae3a04be28dbc3d0f0e068dd, type: 3}
       insertIndex: -1
@@ -2160,6 +2157,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1767373484}
   - {fileID: 1225546241}
+  - {fileID: 168166178}
   - {fileID: 7169718697566103687}
   - {fileID: 325834594}
   - {fileID: 1216472071}
