@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Square
+  m_Name: Platform_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 7482667652216324306, guid: f67a8e24b9a6e47b6a36f2c30cf72dc6, type: 3}
+  m_Sprite: {fileID: 1272140816, guid: a5c2434c3da4048db9b4910e671edca0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -33,4 +33,4 @@ MonoBehaviour:
     e33: 1
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
-  m_ColliderType: 2
+  m_ColliderType: 1
