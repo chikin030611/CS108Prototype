@@ -196,8 +196,7 @@ public class PlayerMovement : MonoBehaviour
         // Ice Ninjutsu
         if (Input.GetButtonDown("Ice") && ki > 0 && IsGrounded())
         {
-            float rotation = sr.flipX ? 1 : -1;
-            StartCoroutine(IceNinjutsuPattern(rotation));
+            StartCoroutine(IceNinjutsuPattern());
 
             ki--;
         }
@@ -239,16 +238,18 @@ public class PlayerMovement : MonoBehaviour
     }
     
     // Ice Ninjutsu Pattern
-    IEnumerator IceNinjutsuPattern(float rotation)
+    IEnumerator IceNinjutsuPattern()
     {
         Vector3 position = transform.position;
-        float x = shotDir.x;
-        float y = shotDir.y;
+        float interval = isFacingRight? 2.2f : -2.2f;
+        float x = shotDir.x + (isFacingRight? 0.7f : -0.7f);
+        float y = shotDir.y + 0.5f;
         for (int i = 0; i < 3; i++)
         {
-            Instantiate(IceNinjutsu,
-                position + new Vector3(x + i * -rotation * 2, y, 0),
-                new Quaternion(0, 0, 90, rotation * 45));
+            GameObject prefab = Instantiate(IceNinjutsu,
+                position + new Vector3(x + i * interval, y, 0),
+                Quaternion.identity);
+            prefab.GetComponent<IceNinjutsu>().direction = isFacingRight;
             yield return new WaitForSeconds(0.2f);
         }
     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6594460971422083504}
   - component: {fileID: 8950919590305902825}
   - component: {fileID: -2377714979921639630}
-  - component: {fileID: 8078745421801306803}
+  - component: {fileID: 5506577304332954944}
   m_Layer: 0
   m_Name: Ice Ninjutsu
   m_TagString: Untagged
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b3645c3dca20e44cfb46b4741403423f, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.94248676, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751ea2b6f4bd046018af6bb46ecd9c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &8078745421801306803
-BoxCollider2D:
+--- !u!60 &5506577304332954944
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -134,12 +134,18 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 2.921875, y: 1.0625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.921875, y: 1.0625}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.69094056, y: 0.11926049}
+      - {x: -0.70240366, y: -0.5625}
+      - {x: -0.7224759, y: -0.63646305}
+      - {x: 0.3858923, y: -0.62958205}
+      - {x: 0.6519374, y: -0.25057074}
+      - {x: 0.8274036, y: 0.11926049}
+  m_UseDelaunayMesh: 0
