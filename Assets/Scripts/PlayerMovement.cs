@@ -39,7 +39,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpingPower = 6f;
     private int numOfJump = 0;
     public int maxNumOfJump = 2;
+    private bool isRunning = false;
     private bool isFacingRight = true;
+    private bool isAttacking = false;
     
     // Sword Attack Variables
     [SerializeField] private float attackRange = 0.5f;
@@ -77,15 +79,16 @@ public class PlayerMovement : MonoBehaviour
     public Dictionary<String, String> DebugDictionary()
     {
         Dictionary<String, String> debug = new Dictionary<String, String>();
-        debug.Add("Health", health.ToString());
-        debug.Add("Max Health", maxHealth.ToString());
-        debug.Add("Ki", ki.ToString());
-        debug.Add("Max Ki", maxKi.ToString());
+        debug.Add("Health", health.ToString() + "/" + maxHealth.ToString());
+        debug.Add("Ki", ki.ToString() + "/" + maxKi.ToString());
+        debug.Add("Speed", speed.ToString());
         debug.Add("Number of Jump", numOfJump.ToString());
         debug.Add("Is Facing Right", isFacingRight.ToString());
         debug.Add("Shot Cooldown", shotCooldown.ToString());
         debug.Add("Shot Direction", shotDir.ToString());
         debug.Add("Is Grounded", IsGrounded().ToString());
+        debug.Add("Is Running", isRunning.ToString());
+        debug.Add("Is Attacking", isAttacking.ToString());
         debug.Add("Colliding with", CheckCollision()[0]);
         
         return debug;
@@ -143,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Input
         horizontal = Input.GetAxisRaw("Horizontal");
+        isRunning = horizontal != 0;
         anim.SetBool("isRunning", horizontal != 0);
         
         // Jump
@@ -176,11 +180,25 @@ public class PlayerMovement : MonoBehaviour
         // Use Sword Attack
         if (Input.GetButtonDown("Sword"))
         {
-            Instantiate(swordCollision, 
-                transform.position + new Vector3(shotDir.x, shotDir.y, 0), 
-                Quaternion.identity);        
+            isAttacking = true;
+            anim.SetTrigger("Attack");
+            if (isRunning)
+            {
+                StartCoroutine(RunAttack());
+            }
+            else
+            {
+                Instantiate(swordCollision,
+                    transform.position + new Vector3(shotDir.x, shotDir.y, 0),
+                    Quaternion.identity);
+                StartCoroutine(Wait(0.8f));
+            }
         }
-        
+        else
+        {
+            isAttacking = false;
+        }
+             
         // Shoot Shuriken
         if (Input.GetButtonDown("Shuriken") && !shotCooldown)
         {
@@ -212,6 +230,23 @@ public class PlayerMovement : MonoBehaviour
         
         // Flip the character
         Flip(); 
+    }
+    
+    // Wait for a certain amount of time
+    IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
+    
+    // Running while attacking
+    IEnumerator RunAttack()
+    {
+        speed = 4f;
+        Instantiate(swordCollision,
+            transform.position + new Vector3(shotDir.x, shotDir.y, 0),
+            Quaternion.identity);
+        yield return new WaitForSeconds(0.5f);
+        speed = 8f;
     }
     
     // Fire Projectile
@@ -274,6 +309,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Heal the player
     public void Heal(bool isHealthPotion, int heal)
     {
         if (isHealthPotion)
