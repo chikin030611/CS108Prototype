@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0}
-  moveSpeed: 10
-  damage: 1
-  lifeTime: 2
+  moveSpeed: 15
+  damage: 5
+  lifeTime: 3
   interval: 0.5
 --- !u!61 &4708840756494508275
 BoxCollider2D:

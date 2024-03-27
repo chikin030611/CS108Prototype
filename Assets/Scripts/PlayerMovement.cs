@@ -279,6 +279,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator IceNinjutsuPattern()
     {
         Vector3 position = transform.position;
+        bool dir = isFacingRight;
         float interval = isFacingRight? 2.2f : -2.2f;
         float x = shotDir.x + (isFacingRight? 0.7f : -0.7f);
         float y = shotDir.y + 0.5f;
@@ -287,7 +288,7 @@ public class PlayerMovement : MonoBehaviour
             GameObject prefab = Instantiate(IceNinjutsu,
                 position + new Vector3(x + i * interval, y, 0),
                 Quaternion.identity);
-            prefab.GetComponent<IceNinjutsu>().direction = isFacingRight;
+            prefab.GetComponent<IceNinjutsu>().direction = dir;
             yield return new WaitForSeconds(0.2f);
         }
     }
