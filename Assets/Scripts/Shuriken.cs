@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Shuriken : MonoBehaviour
 {
     private float moveSpeed;
+    [SerializeField] private float rotationSpeed = 540;
     
     private CircleCollider2D shurikenCollider;
     private SpriteRenderer sr;
@@ -29,7 +31,7 @@ public class Shuriken : MonoBehaviour
         }
         else
         {
-            sr.transform.Rotate(0, 0, 1);
+            sr.transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
         }
 
     }

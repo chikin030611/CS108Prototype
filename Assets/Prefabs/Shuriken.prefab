@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 1, y: 0}
-  moveSpeed: 15
+  moveSpeed: 12
   damage: 1
   lifeTime: 2
   interval: 0.5
@@ -211,3 +211,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a15c915dc704e5598678dda777c452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 720
