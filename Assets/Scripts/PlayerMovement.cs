@@ -18,7 +18,11 @@ using UnityEngine;
  *       a. Collision Checking 
  * 6. Level design 
  *      i. Add finish line 
- *      ii. Add instructions (UI) 
+ *      ii. Add instructions (UI)
+ *
+ * TODAYS TASK:
+ * 1. SHURIKEN SPRITE ROTATION
+ * 2. SWORD SWING SPRITE AND COLLISION
  */
 
 public class PlayerMovement : MonoBehaviour
@@ -177,11 +181,10 @@ public class PlayerMovement : MonoBehaviour
                 Quaternion.identity);        
         }
         
-        // Fire Projectile
-        if (Input.GetButtonDown("Shuriken") && !shotCooldown && ki > 0)
+        // Shoot Shuriken
+        if (Input.GetButtonDown("Shuriken") && !shotCooldown)
         {
-            StartCoroutine(fireProjectile());
-            ki--;
+            StartCoroutine(ShootShuriken());
         }
         
         // Fire Ninjutsu
@@ -212,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
     }
     
     // Fire Projectile
-    IEnumerator fireProjectile()
+    IEnumerator ShootShuriken()
     {
         shotCooldown = true;
         
