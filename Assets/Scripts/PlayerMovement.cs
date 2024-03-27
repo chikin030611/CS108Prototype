@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     // Components
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    private BoxCollider2D playerCollider;
     private CapsuleCollider2D groundCheck;
     private Animator anim;
     private LayerMask groundLayer;
@@ -67,6 +69,51 @@ public class PlayerMovement : MonoBehaviour
     public void SetKi(int ki) { this.ki = ki; }
     public void SetMaxKi(int maxKi) { this.maxKi = maxKi; }
     
+    // Debug Method
+    public Dictionary<String, String> DebugDictionary()
+    {
+        Dictionary<String, String> debug = new Dictionary<String, String>();
+        debug.Add("Health", health.ToString());
+        debug.Add("Max Health", maxHealth.ToString());
+        debug.Add("Ki", ki.ToString());
+        debug.Add("Max Ki", maxKi.ToString());
+        debug.Add("Number of Jump", numOfJump.ToString());
+        debug.Add("Is Facing Right", isFacingRight.ToString());
+        debug.Add("Shot Cooldown", shotCooldown.ToString());
+        debug.Add("Shot Direction", shotDir.ToString());
+        debug.Add("Is Grounded", IsGrounded().ToString());
+        debug.Add("Colliding with", CheckCollision()[0]);
+        
+        return debug;
+    }
+    
+    // Checking what the player is colliding with
+    private string[] CheckCollision()
+    {
+        // Get the playerCollider's bounds
+        Bounds playerBounds = playerCollider.bounds;
+
+        // Get all colliders that overlap with the playerCollider
+        Collider2D[] overlappingColliders = Physics2D.OverlapBoxAll(playerBounds.center, playerBounds.size, 0f);
+
+        // Create a list to store the names of the GameObjects
+        List<string> gameObjectNames = new List<string>();
+
+        // Iterate over the overlapping colliders
+        foreach (Collider2D collider in overlappingColliders)
+        {
+            // If the collider is not the playerCollider itself
+            if (collider != playerCollider)
+            {
+                // Add the name of the GameObject to the list
+                gameObjectNames.Add(collider.gameObject.name);
+            }
+        }
+
+        // Convert the list to an array and return it
+        return gameObjectNames.ToArray();
+    }
+    
     void Start()
     {
         // Initialize Variables
@@ -77,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
         // Get Components
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        playerCollider = GetComponent<BoxCollider2D>();
         groundCheck = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
     }

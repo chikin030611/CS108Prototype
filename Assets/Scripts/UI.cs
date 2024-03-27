@@ -37,7 +37,24 @@ public class UI : MonoBehaviour
         ki = playerMovement.GetKi();
         maxKi = playerMovement.GetMaxKi();
 
-        textObject.text = "Health: " + health + "/" + maxHealth + "\n" + "Ki: " + ki + "/" + maxKi;
+        // textObject.text = "Health: " + health + "/" + maxHealth + "\n" +
+        //                   "Ki: " + ki + "/" + maxKi + "\n";
+        
+        DebugUI();
+        
+    }
+    
+    
+    // Debug
+    void DebugUI()
+    {
+        Dictionary<String, String> debug = playerMovement.DebugDictionary();
+        String debugText = "";
+        foreach (KeyValuePair<String, String> entry in debug)
+        {
+            debugText += entry.Key + ": " + entry.Value + "\n";
+        }
+        textObject.text = debugText;
     }
 
 
