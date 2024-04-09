@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isRunning = false;
     private bool _isFacingRight = true;
     private bool _isAttacking = false;
+    private bool _isKnockedBack = false;
     
     // Sword Attack Variables
     // [SerializeField] private float attackRange = 0.5f;
@@ -62,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _playerCollider;
+    private BoxCollider2D _damageCollider;
     private CapsuleCollider2D _groundCheck;
     private Animator _anim;
     private LayerMask _groundLayer;
@@ -136,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerCollider = GetComponent<BoxCollider2D>();
+        _damageCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         _groundCheck = GetComponent<CapsuleCollider2D>();
         _anim = GetComponent<Animator>();
         _voidCollider = GameObject.Find("Void Collider").GetComponent<BoxCollider2D>();
@@ -144,7 +147,8 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Movement
-        _rigidbody.velocity = new Vector2(_horizontal * _speed, _rigidbody.velocity.y);
+        if (!_isKnockedBack)
+            _rigidbody.velocity = new Vector2(_horizontal * _speed, _rigidbody.velocity.y);
     }
 
     void Update()
@@ -344,12 +348,56 @@ public class PlayerMovement : MonoBehaviour
             {
                 Respawn();
             }
+            else if (other.gameObject.CompareTag("Enemy"))
+            {
+                Knockback();
+                TakeDamage(1);
+            }
         }
+    }
+
+    private void Knockback()
+    {
+        _isKnockedBack = true;
+        _rigidbody.AddForce(new Vector2(_isFacingRight? -10f: 10f, 10f), ForceMode2D.Impulse);
+        StartCoroutine(StopKnockback());
+    }
+    
+    IEnumerator StopKnockback()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _isKnockedBack = false;
     }
 
     private void Respawn()
     {
         transform.position = _respawnPoint;
         _health--;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
+        Invincible();
+    }
+
+    private void Invincible()
+    {
+        _playerCollider.enabled = false;
+        _spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+        StartCoroutine(Flash());
+    }
+
+    IEnumerator Flash()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            _spriteRenderer.enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            _spriteRenderer.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+        }
+        _playerCollider.enabled = true;
+        _spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 }
