@@ -84,15 +84,15 @@ public class PlayerMovement : MonoBehaviour
         Dictionary<String, String> debug = new Dictionary<String, String>();
         debug.Add("Health", _health.ToString() + "/" + _maxHealth.ToString());
         debug.Add("Ki", _ki.ToString() + "/" + _maxKi.ToString());
-        debug.Add("Speed", _speed.ToString());
-        debug.Add("Number of Jump", _numOfJump.ToString());
-        debug.Add("Is Facing Right", _isFacingRight.ToString());
-        debug.Add("Shot Cooldown", _shotCooldown.ToString());
-        debug.Add("Shot Direction", _shotDir.ToString());
-        debug.Add("Is Grounded", IsGrounded().ToString());
-        debug.Add("Is Running", _isRunning.ToString());
-        debug.Add("Is Attacking", _isAttacking.ToString());
-        debug.Add("Colliding with", CheckCollision()[0]);
+        // debug.Add("Speed", _speed.ToString());
+        // debug.Add("Number of Jump", _numOfJump.ToString());
+        // debug.Add("Is Facing Right", _isFacingRight.ToString());
+        // debug.Add("Shot Cooldown", _shotCooldown.ToString());
+        // debug.Add("Shot Direction", _shotDir.ToString());
+        // debug.Add("Is Grounded", IsGrounded().ToString());
+        // debug.Add("Is Running", _isRunning.ToString());
+        // debug.Add("Is Attacking", _isAttacking.ToString());
+        // debug.Add("Colliding with", CheckCollision()[0]);
         
         return debug;
     }
