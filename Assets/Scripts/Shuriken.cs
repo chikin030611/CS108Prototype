@@ -24,16 +24,17 @@ public class Shuriken : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (shurikenCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        sr.transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
         {
             projectile.moveSpeed = 0;
+            rotationSpeed = 0;
             sr.transform.Rotate(0, 0, 0);
         }
-        else
-        {
-            sr.transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
-        }
-
     }
     
 }

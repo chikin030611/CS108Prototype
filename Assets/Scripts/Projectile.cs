@@ -8,11 +8,11 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private float interval = 0.5f;
     
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
     
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
         InvokeRepeating(nameof(FlipSprite), 0, interval);
         Destroy(gameObject, lifeTime);
     }

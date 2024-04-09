@@ -23,10 +23,7 @@ public class Potion : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (isHealthPotion)
-            {
-                _playerMovement.Heal(isHealthPotion, heal);
-            }
+            _playerMovement.Heal(isHealthPotion, heal);
             Destroy(gameObject);
         }
     }

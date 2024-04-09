@@ -227,14 +227,6 @@ public class PlayerMovement : MonoBehaviour
             _ki--;
         }
         
-        // Respawn
-        // if (_playerCollider.IsTouching(_voidCollider))
-        // {
-        //     Debug.Log("Player is touching void collider!");
-        //     Respawn();
-        //     _health = _health - 1;
-        // }
-        
         // Health System
         if (_health <= 0)
         {

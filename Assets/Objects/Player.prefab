@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 2965530357252572924}
   - component: {fileID: 5475116371162449889}
   - component: {fileID: 372564256579875429}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,10 +176,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpingPower: 8
   maxNumOfJump: 2
-  attackRange: 0.5
   swordCollision: {fileID: 6503563835680952964, guid: 1bebeb30990594c0fbc216f1e4110465, type: 3}
-  FireNinjutsu: {fileID: 8736020041361787813, guid: 66b6b9d8024d44bbe8f279f1870b9e86, type: 3}
-  IceNinjutsu: {fileID: 7454583646764477926, guid: 0a5988196484a498c9db0bd1b4f64556, type: 3}
+  fireNinjutsu: {fileID: 0}
+  iceNinjutsu: {fileID: 0}
   projectilePrefab: {fileID: 7448333375346440619, guid: 53e1ae0fa2a67406f945fc36977fddea, type: 3}
 --- !u!70 &5475116371162449889
 CapsuleCollider2D:
