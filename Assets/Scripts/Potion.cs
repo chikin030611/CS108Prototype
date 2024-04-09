@@ -3,31 +3,30 @@ using UnityEngine;
 
 public class Potion : MonoBehaviour
 {
-    private int heal = 1;
+    [SerializeField] private int heal = 1;
     
-    private GameObject player;
-    private PlayerMovement playerMovement;
+    private GameObject _player;
+    private PlayerMovement _playerMovement;
     [SerializeField] private bool isHealthPotion = true;
-    
-    private Collider2D potionCollider;
     
     // Start is called before the first frame update
     void Start()
     {   
-        player = GameObject.Find("Player");
-        if (player != null)
+        _player = GameObject.Find("Player");
+        if (_player != null)
         {
-            playerMovement = player.GetComponent<PlayerMovement>();
+            _playerMovement = _player.GetComponent<PlayerMovement>();
         }
-        potionCollider = GetComponent<Collider2D>();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (potionCollider.IsTouching(player.GetComponent<Collider2D>()))
+        if (other.gameObject.CompareTag("Player"))
         {
-            playerMovement.Heal(isHealthPotion, heal);
+            if (isHealthPotion)
+            {
+                _playerMovement.Heal(isHealthPotion, heal);
+            }
             Destroy(gameObject);
         }
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /*
  * TODO:
@@ -28,67 +29,69 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Character Variables
-    private int health;
-    private int maxHealth = 3;
-    private int ki;
-    private int maxKi = 3;
+    private int _health;
+    private int _maxHealth = 3;
+    private int _ki;
+    private int _maxKi = 3;
+    private Vector3 _respawnPoint;
     
     // Movement variables
-    private float horizontal;
-    private float speed = 8f;
+    private float _horizontal;
+    private float _speed = 8f;
     [SerializeField] private float jumpingPower = 6f;
-    private int numOfJump = 0;
+    private int _numOfJump = 0;
     public int maxNumOfJump = 2;
-    private bool isRunning = false;
-    private bool isFacingRight = true;
-    private bool isAttacking = false;
+    private bool _isRunning = false;
+    private bool _isFacingRight = true;
+    private bool _isAttacking = false;
     
     // Sword Attack Variables
-    [SerializeField] private float attackRange = 0.5f;
+    // [SerializeField] private float attackRange = 0.5f;
     [SerializeField] private GameObject swordCollision;
     
     // Ninjutsu Attack Variables
-    [SerializeField] private GameObject FireNinjutsu;
-    [SerializeField] private GameObject IceNinjutsu;
+    [SerializeField] private GameObject fireNinjutsu;
+    [SerializeField] private GameObject iceNinjutsu;
     
     // Projectile Variables
-    private bool shotCooldown;
-    private float projectileFireRate = 1.5f;
-    Vector2 shotDir = Vector2.right; // Sets the direction to fire bullet
+    private bool _shotCooldown;
+    private float _projectileFireRate = 1.5f;
+    private Vector2 _shotDir = Vector2.right; // Sets the direction to fire bullet
     
     // Components
-    private Rigidbody2D rb;
-    private SpriteRenderer sr;
-    private BoxCollider2D playerCollider;
-    private CapsuleCollider2D groundCheck;
-    private Animator anim;
-    private LayerMask groundLayer;
+    private Rigidbody2D _rigidbody;
+    private SpriteRenderer _spriteRenderer;
+    private BoxCollider2D _playerCollider;
+    private CapsuleCollider2D _groundCheck;
+    private Animator _anim;
+    private LayerMask _groundLayer;
+    private BoxCollider2D _voidCollider;
     [SerializeField] private GameObject projectilePrefab;
     
-    public int GetHealth() { return health; }
-    public int GetMaxHealth() { return maxHealth; }
-    public int GetKi() { return ki; }
-    public int GetMaxKi() { return maxKi; }
+    public int GetHealth() { return _health; }
+    public int GetMaxHealth() { return _maxHealth; }
+    public int GetKi() { return _ki; }
+    public int GetMaxKi() { return _maxKi; }
     
-    public void SetHealth(int health) { this.health = health; }
-    public void SetMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
-    public void SetKi(int ki) { this.ki = ki; }
-    public void SetMaxKi(int maxKi) { this.maxKi = maxKi; }
+    public void SetHealth(int health) { this._health = health; }
+    public void SetMaxHealth(int maxHealth) { this._maxHealth = maxHealth; }
+    public void SetKi(int ki) { this._ki = ki; }
+    public void SetMaxKi(int maxKi) { this._maxKi = maxKi; }
     
     // Debug Method
     public Dictionary<String, String> DebugDictionary()
     {
         Dictionary<String, String> debug = new Dictionary<String, String>();
-        debug.Add("Health", health.ToString() + "/" + maxHealth.ToString());
-        debug.Add("Ki", ki.ToString() + "/" + maxKi.ToString());
-        debug.Add("Speed", speed.ToString());
-        debug.Add("Number of Jump", numOfJump.ToString());
-        debug.Add("Is Facing Right", isFacingRight.ToString());
-        debug.Add("Shot Cooldown", shotCooldown.ToString());
-        debug.Add("Shot Direction", shotDir.ToString());
+        debug.Add("Health", _health.ToString() + "/" + _maxHealth.ToString());
+        debug.Add("Ki", _ki.ToString() + "/" + _maxKi.ToString());
+        debug.Add("Speed", _speed.ToString());
+        debug.Add("Number of Jump", _numOfJump.ToString());
+        debug.Add("Is Facing Right", _isFacingRight.ToString());
+        debug.Add("Shot Cooldown", _shotCooldown.ToString());
+        debug.Add("Shot Direction", _shotDir.ToString());
         debug.Add("Is Grounded", IsGrounded().ToString());
-        debug.Add("Is Running", isRunning.ToString());
-        debug.Add("Is Attacking", isAttacking.ToString());
+        debug.Add("Is Running", _isRunning.ToString());
+        debug.Add("Is Attacking", _isAttacking.ToString());
         debug.Add("Colliding with", CheckCollision()[0]);
         
         return debug;
@@ -98,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     private string[] CheckCollision()
     {
         // Get the playerCollider's bounds
-        Bounds playerBounds = playerCollider.bounds;
+        Bounds playerBounds = _playerCollider.bounds;
 
         // Get all colliders that overlap with the playerCollider
         Collider2D[] overlappingColliders = Physics2D.OverlapBoxAll(playerBounds.center, playerBounds.size, 0f);
@@ -110,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         foreach (Collider2D collider in overlappingColliders)
         {
             // If the collider is not the playerCollider itself
-            if (collider != playerCollider)
+            if (collider != _playerCollider)
             {
                 // Add the name of the GameObject to the list
                 gameObjectNames.Add(collider.gameObject.name);
@@ -124,108 +127,118 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         // Initialize Variables
-        health = maxHealth;
-        ki = maxKi;
-        groundLayer = LayerMask.GetMask("Ground");
+        _health = _maxHealth;
+        _ki = _maxKi;
+        _groundLayer = LayerMask.GetMask("Ground");
+        _respawnPoint = new Vector3(-26, -4, 0);
         
         // Get Components
-        rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
-        playerCollider = GetComponent<BoxCollider2D>();
-        groundCheck = GetComponent<CapsuleCollider2D>();
-        anim = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _playerCollider = GetComponent<BoxCollider2D>();
+        _groundCheck = GetComponent<CapsuleCollider2D>();
+        _anim = GetComponent<Animator>();
+        _voidCollider = GameObject.Find("Void Collider").GetComponent<BoxCollider2D>();
     }
     
     private void FixedUpdate()
     {
         // Movement
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        _rigidbody.velocity = new Vector2(_horizontal * _speed, _rigidbody.velocity.y);
     }
 
     void Update()
     {
         // Input
-        horizontal = Input.GetAxisRaw("Horizontal");
-        isRunning = horizontal != 0;
-        anim.SetBool("isRunning", horizontal != 0);
+        _horizontal = Input.GetAxisRaw("Horizontal");
+        _isRunning = _horizontal != 0;
+        _anim.SetBool("isRunning", _horizontal != 0);
         
         // Jump
         if (Input.GetButtonDown("Jump"))
         {
-            numOfJump++;
-            if (numOfJump < maxNumOfJump)
+            _numOfJump++;
+            if (_numOfJump < maxNumOfJump)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-                anim.SetBool("isJumping", true);
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpingPower);
+                _anim.SetBool("isJumping", true);
             }
         }
         
         // Jump Power Control
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        if (Input.GetButtonUp("Jump") && _rigidbody.velocity.y > 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y * 0.5f);
         }
         
         // Reset Jumping Count
         if (IsGrounded())
         {
-            numOfJump = 0;
-            anim.SetBool("isJumping", false);
+            _numOfJump = 0;
+            _anim.SetBool("isJumping", false);
         } 
         else 
         {
-            anim.SetBool("isJumping", true);
+            _anim.SetBool("isJumping", true);
         }
         
         // Use Sword Attack
         if (Input.GetButtonDown("Sword"))
         {
-            isAttacking = true;
-            anim.SetTrigger("Attack");
-            if (isRunning)
+            _isAttacking = true;
+            _anim.SetTrigger("Attack");
+            if (_isRunning)
             {
                 StartCoroutine(RunAttack());
             }
             else
             {
                 Instantiate(swordCollision,
-                    transform.position + new Vector3(shotDir.x, shotDir.y, 0),
+                    transform.position + new Vector3(_shotDir.x, _shotDir.y, 0),
                     Quaternion.identity);
                 StartCoroutine(Wait(0.8f));
             }
         }
         else
         {
-            isAttacking = false;
+            _isAttacking = false;
         }
              
         // Shoot Shuriken
-        if (Input.GetButtonDown("Shuriken") && !shotCooldown)
+        if (Input.GetButtonDown("Shuriken") && !_shotCooldown)
         {
             StartCoroutine(ShootShuriken());
         }
         
         // Fire Ninjutsu
-        if (Input.GetButtonDown("Fire") && ki > 0)
+        if (Input.GetButtonDown("Fire") && _ki > 0)
         {
-            GameObject prefab = Instantiate(FireNinjutsu);
+            GameObject prefab = Instantiate(fireNinjutsu);
             prefab.transform.position = transform.position;
-            prefab.GetComponent<Projectile>().moveDirection = shotDir;
-            ki--;
+            prefab.GetComponent<Projectile>().moveDirection = _shotDir;
+            _ki--;
         }
         
         // Ice Ninjutsu
-        if (Input.GetButtonDown("Ice") && ki > 0 && IsGrounded())
+        if (Input.GetButtonDown("Ice") && _ki > 0 && IsGrounded())
         {
             StartCoroutine(IceNinjutsuPattern());
 
-            ki--;
+            _ki--;
         }
         
+        // Respawn
+        // if (_playerCollider.IsTouching(_voidCollider))
+        // {
+        //     Debug.Log("Player is touching void collider!");
+        //     Respawn();
+        //     _health = _health - 1;
+        // }
+        
         // Health System
-        if (health <= 0)
+        if (_health <= 0)
         {
-            Destroy(gameObject);
+            // TODO: Die
         }
         
         // Flip the character
@@ -241,26 +254,26 @@ public class PlayerMovement : MonoBehaviour
     // Running while attacking
     IEnumerator RunAttack()
     {
-        speed = 4f;
+        _speed = 4f;
         Instantiate(swordCollision,
-            transform.position + new Vector3(shotDir.x, shotDir.y, 0),
+            transform.position + new Vector3(_shotDir.x, _shotDir.y, 0),
             Quaternion.identity);
         yield return new WaitForSeconds(0.5f);
-        speed = 8f;
+        _speed = 8f;
     }
     
     // Fire Projectile
     IEnumerator ShootShuriken()
     {
-        shotCooldown = true;
+        _shotCooldown = true;
         
-        StartCoroutine(FireProjectilePattern(shotDir));
-        StartCoroutine(FireProjectilePattern(shotDir + new Vector2(0, 0.45f)));
-        StartCoroutine(FireProjectilePattern(shotDir + new Vector2(0, -0.45f)));
+        StartCoroutine(FireProjectilePattern(_shotDir));
+        StartCoroutine(FireProjectilePattern(_shotDir + new Vector2(0, 0.45f)));
+        StartCoroutine(FireProjectilePattern(_shotDir + new Vector2(0, -0.45f)));
         
-        yield return new WaitForSeconds(projectileFireRate);
+        yield return new WaitForSeconds(_projectileFireRate);
 
-        shotCooldown = false;
+        _shotCooldown = false;
     }
     
     // Fire Projectile Pattern
@@ -279,13 +292,13 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator IceNinjutsuPattern()
     {
         Vector3 position = transform.position;
-        bool dir = isFacingRight;
-        float interval = isFacingRight? 2.2f : -2.2f;
-        float x = shotDir.x + (isFacingRight? 0.7f : -0.7f);
-        float y = shotDir.y + 0.5f;
+        bool dir = _isFacingRight;
+        float interval = _isFacingRight? 2.2f : -2.2f;
+        float x = _shotDir.x + (_isFacingRight? 0.7f : -0.7f);
+        float y = _shotDir.y + 0.5f;
         for (int i = 0; i < 3; i++)
         {
-            GameObject prefab = Instantiate(IceNinjutsu,
+            GameObject prefab = Instantiate(iceNinjutsu,
                 position + new Vector3(x + i * interval, y, 0),
                 Quaternion.identity);
             prefab.GetComponent<IceNinjutsu>().direction = dir;
@@ -296,17 +309,17 @@ public class PlayerMovement : MonoBehaviour
     // Check if the player is grounded
     private bool IsGrounded()
     {
-        return groundCheck.IsTouchingLayers(groundLayer);
+        return _groundCheck.IsTouchingLayers(_groundLayer);
     }
 
     // Flip the character
     private void Flip()
     {
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if (_isFacingRight && _horizontal < 0f || !_isFacingRight && _horizontal > 0f)
         {
-            isFacingRight = !isFacingRight;
-            shotDir = new Vector2(-shotDir.x, shotDir.y);
-            sr.flipX = !sr.flipX;
+            _isFacingRight = !_isFacingRight;
+            _shotDir = new Vector2(-_shotDir.x, _shotDir.y);
+            _spriteRenderer.flipX = !_spriteRenderer.flipX;
         }
     }
 
@@ -315,19 +328,36 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isHealthPotion)
         {
-            health += heal;
-            if (health > maxHealth)
+            _health += heal;
+            if (_health > _maxHealth)
             {
-                health = maxHealth;
+                _health = _maxHealth;
             }
         }
         else
         {
-            ki += heal;
-            if (ki > maxKi)
+            _ki += heal;
+            if (_ki > _maxKi)
             {
-                ki = maxKi;
+                _ki = _maxKi;
             }
         }
+    }
+    
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (_playerCollider.IsTouching(other.collider))
+        {
+            if (other.gameObject.CompareTag("Respawn"))
+            {
+                Respawn();
+            }
+        }
+    }
+
+    private void Respawn()
+    {
+        transform.position = _respawnPoint;
+        _health--;
     }
 }
