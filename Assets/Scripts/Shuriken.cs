@@ -36,6 +36,12 @@ public class Shuriken : MonoBehaviour
             projectile.moveSpeed = 0;
             rotationSpeed = 0;
             sr.transform.Rotate(0, 0, 0);
+            shurikenCollider.enabled = false;
+        }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            Destroy(gameObject);
         }
     }
     

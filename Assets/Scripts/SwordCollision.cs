@@ -7,6 +7,7 @@ public class SwordCollision : MonoBehaviour
 {
     
     private float lifeTime = 0.1f;
+    private float damage = 2f;
     
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class SwordCollision : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.GetComponent<Enemy>().Knockback();
-            other.GetComponent<Enemy>().TakeDamage(1);
+            other.GetComponent<Enemy>().TakeDamage(damage);
         }
     }
 }

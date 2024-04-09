@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751ea2b6f4bd046018af6bb46ecd9c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direction: 0
+  iceCollider: {fileID: 0}
 --- !u!60 &5506577304332954944
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -134,7 +136,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 2.921875, y: 1.0625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -142,10 +144,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.69094056, y: 0.11926049}
-      - {x: -0.70240366, y: -0.5625}
-      - {x: -0.7224759, y: -0.63646305}
-      - {x: 0.3858923, y: -0.62958205}
-      - {x: 0.6519374, y: -0.25057074}
-      - {x: 0.8274036, y: 0.11926049}
+    - - {x: 1.375, y: 0.24331373}
+      - {x: -1.3683137, y: -1.125}
+      - {x: -1.3973255, y: -1.2653154}
+      - {x: 0.7576577, y: -1.221312}
+      - {x: 1.2736207, y: -0.50032383}
+      - {x: 1.6329815, y: 0.2653154}
   m_UseDelaunayMesh: 0

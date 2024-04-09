@@ -9,10 +9,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float maxHealth = 10;
     private float health = 10;
     private int damage = 1;
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float moveSpeed = 3.5f;
+    private bool _isKnockedBack = false;
+    private bool _isFrozen = false;
     
     private GameObject _player;
     private Rigidbody2D _rigidbody;
+    private SpriteRenderer _spriteRenderer;
     
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,7 @@ public class Enemy : MonoBehaviour
         }
 
         _rigidbody = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
     }
 
@@ -30,8 +34,11 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         // follow player
-        transform.position = Vector2.MoveTowards(transform.position, _player.transform.position,
-            moveSpeed * Time.deltaTime);
+        if (!_isKnockedBack || !_isFrozen)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position,
+                moveSpeed * Time.deltaTime);
+        }
     }
     
     public Dictionary<String, String> ReturnStats() {
@@ -56,8 +63,36 @@ public class Enemy : MonoBehaviour
 
     public void Knockback()
     {
+        _isKnockedBack = true;
         _rigidbody.velocity = Vector2.zero;
         float horizontal = transform.position.x - _player.transform.position.x;
-        _rigidbody.AddForce(new Vector2(horizontal, 5f), ForceMode2D.Impulse);
+        _rigidbody.AddForce(new Vector2(horizontal * 8f, 5f), ForceMode2D.Impulse);
+        StartCoroutine(StopKnockback());
+    }
+    
+    IEnumerator StopKnockback()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _isKnockedBack = false;
+    }
+
+    public void Freeze()
+    {
+        if (!_isFrozen)
+        {
+            _isFrozen = true;
+            moveSpeed = 0;
+            _spriteRenderer.color = Color.cyan;
+            TakeDamage(2f);
+            StartCoroutine(StopFreeze());
+        }
+    }
+
+    IEnumerator StopFreeze()
+    {
+        yield return new WaitForSeconds(2f);
+        _isFrozen = false;
+        moveSpeed = 3.5f;
+        _spriteRenderer.color = Color.yellow;
     }
 }

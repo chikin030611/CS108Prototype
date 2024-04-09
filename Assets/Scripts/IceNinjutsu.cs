@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class IceNinjutsu : MonoBehaviour
@@ -28,6 +29,14 @@ public class IceNinjutsu : MonoBehaviour
         else
         {
             transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.GetComponent<Enemy>().Freeze();
         }
     }
 }
