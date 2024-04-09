@@ -6,7 +6,7 @@ public class Potion : MonoBehaviour
     [SerializeField] private int heal = 1;
     
     private GameObject _player;
-    private PlayerMovement _playerMovement;
+    private PlayerControls _playerControls;
     [SerializeField] private bool isHealthPotion = true;
     
     // Start is called before the first frame update
@@ -15,7 +15,7 @@ public class Potion : MonoBehaviour
         _player = GameObject.Find("Player");
         if (_player != null)
         {
-            _playerMovement = _player.GetComponent<PlayerMovement>();
+            _playerControls = _player.GetComponent<PlayerControls>();
         }
     }
     
@@ -23,7 +23,7 @@ public class Potion : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            _playerMovement.Heal(isHealthPotion, heal);
+            _playerControls.Heal(isHealthPotion, heal);
             Destroy(gameObject);
         }
     }

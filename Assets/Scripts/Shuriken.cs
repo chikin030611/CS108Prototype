@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class Shuriken : MonoBehaviour
 {
     private float moveSpeed;
+    public float damage = 1f;
     [SerializeField] private float rotationSpeed = 540;
     
     private CircleCollider2D shurikenCollider;
@@ -18,6 +19,7 @@ public class Shuriken : MonoBehaviour
         shurikenCollider = GetComponent<CircleCollider2D>();
         sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         projectile = GetComponent<Projectile>();
+        
         moveSpeed = projectile.moveSpeed;
     }
 

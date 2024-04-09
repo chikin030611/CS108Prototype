@@ -13,7 +13,7 @@ public class UI : MonoBehaviour
     
     private GameObject player;
     private TextMeshProUGUI textObject;
-    private PlayerMovement playerMovement;
+    private PlayerControls _playerControls;
     
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class UI : MonoBehaviour
         player = GameObject.Find("Player");
         if (player != null)
         {
-            playerMovement = player.GetComponent<PlayerMovement>();
+            _playerControls = player.GetComponent<PlayerControls>();
         }
         textObject = GetComponent<TextMeshProUGUI>();
     }
@@ -30,10 +30,10 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        health = playerMovement.GetHealth();
-        maxHealth = playerMovement.GetMaxHealth();
-        ki = playerMovement.GetKi();
-        maxKi = playerMovement.GetMaxKi();
+        health = _playerControls.GetHealth();
+        maxHealth = _playerControls.GetMaxHealth();
+        ki = _playerControls.GetKi();
+        maxKi = _playerControls.GetMaxKi();
 
         // textObject.text = "Health: " + health + "/" + maxHealth + "\n" +
         //                   "Ki: " + ki + "/" + maxKi + "\n";
@@ -46,7 +46,7 @@ public class UI : MonoBehaviour
     // Debug
     void DebugUI()
     {
-        Dictionary<String, String> debug = playerMovement.DebugDictionary();
+        Dictionary<String, String> debug = _playerControls.DebugDictionary();
         String debugText = "";
         foreach (KeyValuePair<String, String> entry in debug)
         {

@@ -26,7 +26,7 @@ using UnityEngine.Serialization;
  * 2. SWORD SWING SPRITE AND COLLISION
  */
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerControls : MonoBehaviour
 {
     // Character Variables
     private int _health;
