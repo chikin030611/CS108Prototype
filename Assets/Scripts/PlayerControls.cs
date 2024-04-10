@@ -373,7 +373,7 @@ public class PlayerControls : MonoBehaviour
 
     IEnumerator Flash()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             _spriteRenderer.enabled = false;
             yield return new WaitForSeconds(0.1f);

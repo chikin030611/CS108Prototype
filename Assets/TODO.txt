@@ -5,10 +5,12 @@
  * - hints the player to go to the door √
  * - Add winning and losing screen √
  * - Add restart button in winning and losing screen √
- * - Add sprite for the enemy and fire effect
- * - Add ready button in the beginning of the game 
- * - Add enemy detection 
+ * - Add sprite for the enemy and fire effect √
+ * - Add enemy detection √
+ * - Fix enemy damage √
+ * - Fix enemy movement √
+ * - Disable UI when game over
  * - Fix player stuck in the ground 
- * - Fix enemy damage
- * - Fix enemy movement 
+ * - Fix objective miscount
+ * - Add sound effects
  */
