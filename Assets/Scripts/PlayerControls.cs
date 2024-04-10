@@ -6,24 +6,14 @@ using UnityEngine.Serialization;
 
 /*
  * TODO:
- * 1. Add health system √
- * 2. Add sword attack √
- *      i. Collision system 
- * 3. Add ninjutsu attack √
- *     i. Fire √
- *    ii. Ice √
- * 4. Add potion √
- * 5. Add enemy 
- *    i. Health system 
- *   ii. Attack system *****
- *       a. Collision Checking 
- * 6. Level design 
- *      i. Add finish line 
- *      ii. Add instructions (UI)
- *
- * TODAYS TASK:
- * 1. SHURIKEN SPRITE ROTATION
- * 2. SWORD SWING SPRITE AND COLLISION
+ * - Fix enemies number in GameController √
+ * - Add winning and losing screen
+ *   - When all enemies are defeated, a glowing door appears at the end of the level
+ *   - hints the player to go to the door
+ *   - Restart button in winning and losing screen
+ * - Add restart button
+ * - Fix player stuck in the ground
+ * - Fix enemy movement
  */
 
 public class PlayerControls : MonoBehaviour
@@ -86,6 +76,7 @@ public class PlayerControls : MonoBehaviour
         Dictionary<String, String> debug = new Dictionary<String, String>();
         debug.Add("Health", _health.ToString() + "/" + _maxHealth.ToString());
         debug.Add("Ki", _ki.ToString() + "/" + _maxKi.ToString());
+        debug.Add("Shuriken Cooldown", _shotCooldown.ToString());
         // debug.Add("Speed", _speed.ToString());
         // debug.Add("Number of Jump", _numOfJump.ToString());
         // debug.Add("Is Facing Right", _isFacingRight.ToString());

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -8518148523904782586}
   - component: {fileID: -6263389130228755530}
   - component: {fileID: 4708840756494508275}
+  - component: {fileID: -2100247626197745445}
   m_Layer: 0
   m_Name: Fire Ninjutsu
   m_TagString: Untagged
@@ -100,7 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0}
   moveSpeed: 15
-  damage: 5
   lifeTime: 3
   interval: 0.5
 --- !u!61 &4708840756494508275
@@ -148,3 +148,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3440881, y: 0.78227353}
   m_EdgeRadius: 0
+--- !u!114 &-2100247626197745445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736020041361787813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d13b698b1e2419fab2cf046730ba0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
+  kiCost: 1

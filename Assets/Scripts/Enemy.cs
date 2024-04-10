@@ -17,17 +17,21 @@ public class Enemy : MonoBehaviour
     private GameObject _player;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
+    private GameObject gameController;
+    private GameController gameControllerScript;
     
     // Start is called before the first frame update
     void Start()
     {
-        if (_player == null)
-        {
-            _player = GameObject.Find("Player");
-        }
-
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        _player = GameObject.Find("Player");
+        gameController = GameObject.Find("GameController");
+        if (gameController != null)
+        {
+            gameControllerScript = gameController.GetComponent<GameController>();
+        }
 
     }
 
@@ -54,6 +58,8 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            int numOfEnemies = gameControllerScript.ReturnNumOfEnemies();
+            gameControllerScript.UpdateNumOfEnemies(--numOfEnemies); // Update the number of enemies
             Destroy(gameObject);
         }
     }
