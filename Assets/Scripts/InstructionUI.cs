@@ -8,7 +8,7 @@ public class InstructionUI : MonoBehaviour
 {
     private String _instruction = "Instruction:\n< > to move\n^ to jump\n(press again to double jump)\nx to use sword\n" +
                                   "c to use shuriken\ns to use fire ninjutsu\nd to use ice ninjutsu";
-    private String _tab = "Press <color=#FFC900> TAB </color> to open/close instructions\n";
+    private String _tab = "Press <color=#FFC900>TAB</color> to open/close instructions\n";
     private TextMeshProUGUI textObject;
     
     // Start is called before the first frame update

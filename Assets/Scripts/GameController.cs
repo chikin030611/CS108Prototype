@@ -83,8 +83,8 @@ public class GameController : MonoBehaviour
         return numOfEnemies;
     }
 
-    public void UpdateNumOfEnemies(int value)
+    public void DecreaseNumOfEnemies()
     {
-        numOfEnemies = value;
+        numOfEnemies--;
     }
 }

@@ -78,9 +78,9 @@ public class Enemy : MonoBehaviour
         StartCoroutine(FlashRed());
         if (_health <= 0)
         {
-            int numOfEnemies = gameControllerScript.ReturnNumOfEnemies();
-            gameControllerScript.UpdateNumOfEnemies(--numOfEnemies); // Update the number of enemies
             Destroy(gameObject);
+            gameControllerScript.DecreaseNumOfEnemies();
+            Debug.Log("Enemy Died!\n Number of enemies: " + gameControllerScript.ReturnNumOfEnemies());
         }
     }
     
@@ -116,7 +116,7 @@ public class Enemy : MonoBehaviour
             if (_health <= 0)
             {
                 int numOfEnemies = gameControllerScript.ReturnNumOfEnemies();
-                gameControllerScript.UpdateNumOfEnemies(--numOfEnemies); // Update the number of enemies
+                gameControllerScript.DecreaseNumOfEnemies();
                 Destroy(gameObject);
             }            
             StartCoroutine(StopFreeze());

@@ -11,6 +11,6 @@
  * - Fix enemy movement √
  * - Disable UI when game over √
  * - Fix player stuck in the ground √
- * - Fix objective miscount
- * - Add sound effects
+ * - Fix objective miscount √
+ * - Add sound effects 
  */
