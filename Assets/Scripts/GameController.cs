@@ -60,6 +60,16 @@ public class GameController : MonoBehaviour
         return _objectiveComplete;
     }
     
+    public bool GetGameWon()
+    {
+        return _gameWon;
+    }
+    
+    public bool GetGameLost()
+    {
+        return _gameLost;
+    }
+    
     public void WinGame()
     {
         gameOverScreenUIScript._gameOverText = "You Win!";
