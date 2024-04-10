@@ -6,6 +6,7 @@ using UnityEngine;
 public class IceNinjutsu : MonoBehaviour
 {
     private float lifeTime = 2f;
+    [SerializeField] private int kiCost = 1;
     public bool direction;
     
     // Start is called before the first frame update
@@ -18,6 +19,11 @@ public class IceNinjutsu : MonoBehaviour
     void Update()
     {
         Flip();
+    }
+    
+    public int GetKiCost()
+    {
+        return kiCost;
     }
     
     private void Flip()

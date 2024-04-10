@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float moveSpeed = 3.5f;
     private bool _isKnockedBack = false;
     private bool _isFrozen = false;
+    private bool _isBurning = false;
     
     private GameObject _player;
     private Rigidbody2D _rigidbody;
@@ -34,7 +35,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         // follow player
-        if (!_isKnockedBack || !_isFrozen)
+        if (!_isKnockedBack)
         {
             transform.position = Vector2.MoveTowards(transform.position, _player.transform.position,
                 moveSpeed * Time.deltaTime);
@@ -56,12 +57,8 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-    }
 
-    public void Knockback()
+    public void KnockBack()
     {
         _isKnockedBack = true;
         _rigidbody.velocity = Vector2.zero;
@@ -95,4 +92,25 @@ public class Enemy : MonoBehaviour
         moveSpeed = 3.5f;
         _spriteRenderer.color = Color.yellow;
     }
+
+    public void Burn()
+    {
+        _isBurning = true;
+        StartCoroutine(Burning());
+        _isBurning = false;
+    }
+
+    IEnumerator Burning()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            TakeDamage(1f);
+            _spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.5f);
+            _spriteRenderer.color = Color.yellow;
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+
 }

@@ -30,9 +30,9 @@ public class PlayerControls : MonoBehaviour
 {
     // Character Variables
     private int _health;
-    private int _maxHealth = 3;
+    private int _maxHealth = 5;
     private int _ki;
-    private int _maxKi = 3;
+    private int _maxKi = 5;
     private Vector3 _respawnPoint;
     
     // Movement variables
@@ -220,15 +220,14 @@ public class PlayerControls : MonoBehaviour
             GameObject prefab = Instantiate(fireNinjutsu);
             prefab.transform.position = transform.position;
             prefab.GetComponent<Projectile>().moveDirection = _shotDir;
-            _ki--;
+            _ki -= prefab.GetComponent<FireNinjutsu>().GetKiCost();
         }
         
         // Ice Ninjutsu
         if (Input.GetButtonDown("Ice") && _ki > 0 && IsGrounded())
         {
             StartCoroutine(IceNinjutsuPattern());
-
-            _ki--;
+            _ki -= iceNinjutsu.GetComponent<IceNinjutsu>().GetKiCost();
         }
         
         // Health System
@@ -239,6 +238,12 @@ public class PlayerControls : MonoBehaviour
         
         // Flip the character
         Flip(); 
+    }
+    
+    // Use Ki
+    private void UseKi(int ki)
+    {
+        _ki -= ki;
     }
     
     // Wait for a certain amount of time
@@ -342,17 +347,14 @@ public class PlayerControls : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (_playerCollider.IsTouching(other.collider))
+        if (other.gameObject.CompareTag("Respawn"))
         {
-            if (other.gameObject.CompareTag("Respawn"))
-            {
-                Respawn();
-            }
-            else if (other.gameObject.CompareTag("Enemy"))
-            {
-                Knockback();
-                TakeDamage(1);
-            }
+            Respawn();
+        }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            Knockback();
+            TakeDamage(1);
         }
     }
 

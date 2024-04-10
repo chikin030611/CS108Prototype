@@ -25,7 +25,7 @@ public class SwordCollision : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            other.GetComponent<Enemy>().Knockback();
+            other.GetComponent<Enemy>().KnockBack();
             other.GetComponent<Enemy>().TakeDamage(damage);
         }
     }
