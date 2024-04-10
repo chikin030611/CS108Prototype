@@ -13,10 +13,12 @@ public class Enemy : MonoBehaviour
     private bool _isKnockedBack = false;
     private bool _isFrozen = false;
     private bool _isBurning = false;
+    private bool _isFacingRight = false;
     
     private GameObject _player;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _burningSpriteRenderer;
     private GameObject gameController;
     private GameController gameControllerScript;
     
@@ -25,6 +27,7 @@ public class Enemy : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _burningSpriteRenderer = transform.GetChild(2).GetComponent<SpriteRenderer>();
         
         _player = GameObject.Find("Player");
         gameController = GameObject.Find("GameController");
@@ -38,6 +41,9 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _isFacingRight = transform.position.x > _player.transform.position.x;
+        _spriteRenderer.flipX = _isFacingRight;
+        
         // follow player
         if (!_isKnockedBack)
         {
@@ -56,12 +62,20 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        _spriteRenderer.color = Color.red;
+        StartCoroutine(FlashRed());
         if (health <= 0)
         {
             int numOfEnemies = gameControllerScript.ReturnNumOfEnemies();
             gameControllerScript.UpdateNumOfEnemies(--numOfEnemies); // Update the number of enemies
             Destroy(gameObject);
         }
+    }
+    
+    IEnumerator FlashRed()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _spriteRenderer.color = Color.white;
     }
 
     public void KnockBack()
@@ -96,7 +110,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _isFrozen = false;
         moveSpeed = 3.5f;
-        _spriteRenderer.color = Color.yellow;
+        _spriteRenderer.color = Color.white;
     }
 
     public void Burn()
@@ -108,14 +122,16 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Burning()
     {
+        _burningSpriteRenderer.enabled = true;   
         for(int i = 0; i < 3; i++)
         {
             TakeDamage(1f);
             _spriteRenderer.color = Color.red;
             yield return new WaitForSeconds(0.5f);
-            _spriteRenderer.color = Color.yellow;
+            _spriteRenderer.color = Color.white;
             yield return new WaitForSeconds(0.5f);
         }
+        _burningSpriteRenderer.enabled = false;
     }
 
 
