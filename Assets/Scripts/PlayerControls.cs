@@ -4,17 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-/*
- * TODO:
- * - Fix enemies number in GameController √
- * - Add winning and losing screen
- *   - When all enemies are defeated, a glowing door appears at the end of the level
- *   - hints the player to go to the door
- *   - Restart button in winning and losing screen
- * - Add restart button
- * - Fix player stuck in the ground
- * - Fix enemy movement
- */
+
 
 public class PlayerControls : MonoBehaviour
 {
@@ -132,7 +122,7 @@ public class PlayerControls : MonoBehaviour
         _damageCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         _groundCheck = GetComponent<CapsuleCollider2D>();
         _anim = GetComponent<Animator>();
-        _voidCollider = GameObject.Find("Void Collider").GetComponent<BoxCollider2D>();
+        // _voidCollider = GameObject.Find("Void Collider").GetComponent<BoxCollider2D>();
     }
     
     private void FixedUpdate()
@@ -352,7 +342,7 @@ public class PlayerControls : MonoBehaviour
     private void Knockback()
     {
         _isKnockedBack = true;
-        _rigidbody.AddForce(new Vector2(_isFacingRight? -10f: 10f, 10f), ForceMode2D.Impulse);
+        _rigidbody.AddForce(new Vector2(_isFacingRight? -5f: 5f, 5f), ForceMode2D.Impulse);
         StartCoroutine(StopKnockback());
     }
     

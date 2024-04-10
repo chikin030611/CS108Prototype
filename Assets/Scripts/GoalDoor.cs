@@ -17,12 +17,6 @@ public class GoalDoor : MonoBehaviour
             _gameControllerScript = _gameController.GetComponent<GameController>();
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
     public void OnTriggerEnter2D(Collider2D other)
     {

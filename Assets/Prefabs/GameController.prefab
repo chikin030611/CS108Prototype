@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GoalDoor: {fileID: 1481166445763527966, guid: 6afcfe69fc7e64a1aa02c8da3df35ccb, type: 3}
+  GameOverScreen: {fileID: 8573845638440665449, guid: 5b25c3b20e79a4ed5a039712f4c98e6a, type: 3}
