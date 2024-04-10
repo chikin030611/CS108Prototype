@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     
-    private SpriteRenderer _burningSpriteRenderer;
+    private ParticleSystem _burningParticleSystem;
     private Collider2D _playerDetector;
     
     private GameObject gameController;
@@ -32,8 +32,9 @@ public class Enemy : MonoBehaviour
         _health = maxHealth;
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _burningSpriteRenderer = transform.GetChild(2).GetComponent<SpriteRenderer>();
-        _playerDetector = transform.GetChild(3).GetComponent<Collider2D>();
+        _burningParticleSystem = GetComponent<ParticleSystem>();
+        _burningParticleSystem.Stop();
+        _playerDetector = transform.GetChild(2).GetComponent<Collider2D>();
         
         _player = GameObject.Find("Player");
         gameController = GameObject.Find("GameController");
@@ -139,7 +140,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Burning()
     {
-        _burningSpriteRenderer.enabled = true;   
+        _burningParticleSystem.Play();
         for(int i = 0; i < 3; i++)
         {
             TakeDamage(1f);
@@ -148,7 +149,7 @@ public class Enemy : MonoBehaviour
             _spriteRenderer.color = Color.white;
             yield return new WaitForSeconds(0.5f);
         }
-        _burningSpriteRenderer.enabled = false;
+        _burningParticleSystem.Stop();
     }
 
 
