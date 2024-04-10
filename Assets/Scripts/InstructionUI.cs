@@ -6,8 +6,15 @@ using UnityEngine;
 
 public class InstructionUI : MonoBehaviour
 {
-    private String _instruction = "Instruction:\n< > to move\n^ to jump\n(press again to double jump)\nx to use sword\n" +
-                                  "c to use shuriken\ns to use fire ninjutsu\nd to use ice ninjutsu";
+    private String _instruction = "<color=#FFC900>< ></color> to move\n" +
+                                  "<color=#FFC900>^</color> to jump\n" +
+                                  "(press again to double jump)\n" +
+                                  "<color=#FFC900>X</color> to use sword\n" +
+                                  "<color=#FFC900>C</color> to use shuriken\n" +
+                                  "<color=#FFC900>Ki is needed to use ninjutsu</color>\n" +
+                                  "<color=#FFC900>S</color> to use fire ninjutsu\n" +
+                                  "<color=#FFC900>D</color> to use ice ninjutsu";
+    
     private String _tab = "Press <color=#FFC900>TAB</color> to open/close instructions\n";
     private TextMeshProUGUI textObject;
     

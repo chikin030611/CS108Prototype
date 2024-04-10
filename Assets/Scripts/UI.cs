@@ -35,8 +35,8 @@ public class UI : MonoBehaviour
         ki = _playerControls.GetKi();
         maxKi = _playerControls.GetMaxKi();
 
-        // textObject.text = "Health: " + health + "/" + maxHealth + "\n" +
-        //                   "Ki: " + ki + "/" + maxKi + "\n";
+        textObject.text = "<color=#FF0000>HP:</color> " + health + "/" + maxHealth + "\n" +
+                          "<color=#00BDFF>Ki:</color> " + ki + "/" + maxKi + "\n";
         
         DebugUI();
         
@@ -52,7 +52,7 @@ public class UI : MonoBehaviour
         {
             debugText += entry.Key + ": " + entry.Value + "\n";
         }
-        textObject.text = debugText;
+        textObject.text += debugText;
     }
 
 

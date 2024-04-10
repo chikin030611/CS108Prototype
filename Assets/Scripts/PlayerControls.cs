@@ -64,8 +64,8 @@ public class PlayerControls : MonoBehaviour
     public Dictionary<String, String> DebugDictionary()
     {
         Dictionary<String, String> debug = new Dictionary<String, String>();
-        debug.Add("Health", _health.ToString() + "/" + _maxHealth.ToString());
-        debug.Add("Ki", _ki.ToString() + "/" + _maxKi.ToString());
+        // debug.Add("Health", _health.ToString() + "/" + _maxHealth.ToString());
+        // debug.Add("Ki", _ki.ToString() + "/" + _maxKi.ToString());
         debug.Add("Shuriken Cooldown", _shotCooldown.ToString());
         // debug.Add("Speed", _speed.ToString());
         // debug.Add("Number of Jump", _numOfJump.ToString());

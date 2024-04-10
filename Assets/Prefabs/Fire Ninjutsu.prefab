@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0}
   moveSpeed: 15
-  lifeTime: 3
+  lifeTime: 1.5
   interval: 0.5
 --- !u!61 &4708840756494508275
 BoxCollider2D:
