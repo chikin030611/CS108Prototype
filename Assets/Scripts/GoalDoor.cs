@@ -7,22 +7,28 @@ public class GoalDoor : MonoBehaviour
     
     private GameObject _gameController;
     private GameController _gameControllerScript;
+    private BoxCollider2D _boxCollider2D;
     
     // Start is called before the first frame update
     void Start()
     {
         _gameController = GameObject.Find("GameController");
+        _boxCollider2D = GetComponent<BoxCollider2D>();
         if (_gameController != null)
         {
             _gameControllerScript = _gameController.GetComponent<GameController>();
         }
     }
     
-    public void OnTriggerEnter2D(Collider2D other)
+    void Update()
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (_boxCollider2D.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
-            _gameControllerScript.WinGame();
+            if (Input.GetButtonDown("Jump"))
+            { 
+                _gameControllerScript.TransferToNextLevel();
+            }
         }
     }
+    
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -50,9 +51,18 @@ public class GameController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 Time.timeScale = 1;
-                UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
+    }
+    
+    public void TransferToNextLevel()
+    {
+        Debug.Log("Player has entered the goal door!");
+
+        Time.timeScale = 1;
+        SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex + 1);
     }
     
     public bool GetObjectiveComplete()
