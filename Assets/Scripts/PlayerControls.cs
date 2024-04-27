@@ -25,6 +25,7 @@ public class PlayerControls : MonoBehaviour
     private bool _isFacingRight = true;
     private bool _isAttacking = false;
     private bool _isKnockedBack = false;
+    private bool _isNinjutsuCooledDown = false;
     
     // Sword Attack Variables
     // [SerializeField] private float attackRange = 0.5f;
@@ -194,23 +195,30 @@ public class PlayerControls : MonoBehaviour
         {
             StartCoroutine(ShootShuriken());
         }
-        
-        // Fire Ninjutsu
-        if (Input.GetButtonDown("Fire") && _ki > 0)
+
+        // Ninjutsu
+        if (!_isNinjutsuCooledDown && (Input.GetButtonDown("Fire") || Input.GetButtonDown("Ice")))
         {
-            GameObject prefab = Instantiate(fireNinjutsu);
-            prefab.transform.position = transform.position;
-            prefab.GetComponent<Projectile>().moveDirection = _shotDir;
-            _ki -= prefab.GetComponent<FireNinjutsu>().GetKiCost();
+            // Fire Ninjutsu
+            if (Input.GetButtonDown("Fire") && _ki > 0)
+            {
+                GameObject prefab = Instantiate(fireNinjutsu);
+                prefab.transform.position = transform.position;
+                prefab.GetComponent<Projectile>().moveDirection = _shotDir;
+                _ki -= prefab.GetComponent<FireNinjutsu>().GetKiCost();
+            }
+
+            // Ice Ninjutsu
+            if (Input.GetButtonDown("Ice") && _ki > 0 && IsGrounded())
+            {
+                StartCoroutine(IceNinjutsuPattern());
+                _ki -= iceNinjutsu.GetComponent<IceNinjutsu>().GetKiCost();
+            }
+            
+            _isNinjutsuCooledDown = true;
+            StartCoroutine(NinjutsuCoolDown());
         }
-        
-        // Ice Ninjutsu
-        if (Input.GetButtonDown("Ice") && _ki > 0 && IsGrounded())
-        {
-            StartCoroutine(IceNinjutsuPattern());
-            _ki -= iceNinjutsu.GetComponent<IceNinjutsu>().GetKiCost();
-        }
-        
+
         // Health System
         if (_health <= 0)
         {
@@ -256,6 +264,13 @@ public class PlayerControls : MonoBehaviour
         yield return new WaitForSeconds(_projectileFireRate);
 
         _shotCooldown = false;
+    }
+    
+    // Ninjutsu Cooldown
+    IEnumerator NinjutsuCoolDown()
+    {
+        yield return new WaitForSeconds(2f);
+        _isNinjutsuCooledDown = false;
     }
     
     // Fire Projectile Pattern

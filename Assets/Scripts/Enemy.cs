@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         }
         
         // follow player
-        if (!_isKnockedBack && _isFoundPlayer)
+        if (_isFoundPlayer)
         {
             transform.position = Vector2.MoveTowards(transform.position, _player.transform.position,
                 moveSpeed * Time.deltaTime);
@@ -94,6 +94,7 @@ public class Enemy : MonoBehaviour
     {
         _isKnockedBack = true;
         _rigidbody.velocity = Vector2.zero;
+        moveSpeed = 0;
         float horizontal = transform.position.x - _player.transform.position.x;
         _rigidbody.AddForce(new Vector2(horizontal * 8f, 5f), ForceMode2D.Impulse);
         StartCoroutine(StopKnockback());
@@ -101,7 +102,8 @@ public class Enemy : MonoBehaviour
     
     IEnumerator StopKnockback()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
+        moveSpeed = 3.5f;
         _isKnockedBack = false;
     }
 
@@ -115,7 +117,6 @@ public class Enemy : MonoBehaviour
             _spriteRenderer.color = Color.cyan;
             if (_health <= 0)
             {
-                int numOfEnemies = gameControllerScript.ReturnNumOfEnemies();
                 gameControllerScript.DecreaseNumOfEnemies();
                 Destroy(gameObject);
             }            
