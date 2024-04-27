@@ -107,7 +107,7 @@ public class Enemy : MonoBehaviour
         _isKnockedBack = false;
     }
 
-    public void Freeze()
+    public void Freeze(float freezeTime)
     {
         if (!_isFrozen)
         {
@@ -119,32 +119,33 @@ public class Enemy : MonoBehaviour
             {
                 gameControllerScript.DecreaseNumOfEnemies();
                 Destroy(gameObject);
-            }            
-            StartCoroutine(StopFreeze());
+            }
+            
+            StartCoroutine(StopFreeze(freezeTime));
         }
     }
 
-    IEnumerator StopFreeze()
+    IEnumerator StopFreeze(float freezeTime)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(freezeTime);
         _isFrozen = false;
         moveSpeed = 3.5f;
         _spriteRenderer.color = Color.white;
     }
 
-    public void Burn()
+    public void Burn(float damage)
     {
         _isBurning = true;
-        StartCoroutine(Burning());
+        StartCoroutine(Burning(damage));
         _isBurning = false;
     }
 
-    IEnumerator Burning()
+    IEnumerator Burning(float damage)
     {
         _burningParticleSystem.Play();
         for(int i = 0; i < 3; i++)
         {
-            TakeDamage(1f);
+            TakeDamage(damage);
             _spriteRenderer.color = Color.red;
             yield return new WaitForSeconds(0.5f);
             _spriteRenderer.color = Color.white;

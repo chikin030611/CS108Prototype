@@ -2,9 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-
-
 
 public class PlayerControls : MonoBehaviour
 {
@@ -14,6 +11,8 @@ public class PlayerControls : MonoBehaviour
     private int _ki;
     private int _maxKi = 5;
     private Vector3 _respawnPoint;
+    private int _level = 1;
+    private int _exp = 5;
     
     // Movement variables
     private float _horizontal;
@@ -28,7 +27,6 @@ public class PlayerControls : MonoBehaviour
     private bool _isNinjutsuCooledDown = false;
     
     // Sword Attack Variables
-    // [SerializeField] private float attackRange = 0.5f;
     [SerializeField] private GameObject swordCollision;
     
     // Ninjutsu Attack Variables
@@ -223,6 +221,20 @@ public class PlayerControls : MonoBehaviour
         if (_health <= 0)
         {
             // TODO: Die
+        }
+        
+        // Level System
+        if (_exp >= 5 || _exp >= 10)
+        {
+            _level++;
+            _exp = 0;
+            _maxHealth += 2;
+            _health = _maxHealth;
+            _maxKi += 2;
+            _ki = _maxKi;
+            _projectileFireRate -= .2f;
+            fireNinjutsu.GetComponent<FireNinjutsu>().LevelUp();
+            iceNinjutsu.GetComponent<IceNinjutsu>().LevelUp();
         }
         
         // Flip the character

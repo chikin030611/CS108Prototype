@@ -8,6 +8,7 @@ public class IceNinjutsu : MonoBehaviour
     private float lifeTime = 2f;
     [SerializeField] private int kiCost = 1;
     public bool direction;
+    private float freezeTime = 2f;
     
     // Start is called before the first frame update
     void Start()
@@ -42,7 +43,12 @@ public class IceNinjutsu : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            other.GetComponent<Enemy>().Freeze();
+            other.GetComponent<Enemy>().Freeze(freezeTime);
         }
+    }
+
+    public void LevelUp()
+    {
+        freezeTime += 1f;
     }
 }
