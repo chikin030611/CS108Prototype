@@ -10,6 +10,12 @@ public class UI : MonoBehaviour
     private int maxHealth;
     private int ki;
     private int maxKi;
+    private int level;
+    private int exp;
+    private int expToLevelUp;
+    private bool isNinjutsuCoolDown;
+    private float ninjutsuCoolDownTime;
+    private float shurikenCoolDownTime;
     
     private GameObject player;
     private TextMeshProUGUI textObject;
@@ -34,11 +40,21 @@ public class UI : MonoBehaviour
         maxHealth = _playerControls.GetMaxHealth();
         ki = _playerControls.GetKi();
         maxKi = _playerControls.GetMaxKi();
-
-        textObject.text = "<color=#FF0000>HP:</color> " + health + "/" + maxHealth + "\n" +
-                          "<color=#00BDFF>Ki:</color> " + ki + "/" + maxKi + "\n";
+        level = _playerControls.GetLevel();
+        exp = _playerControls.GetExp();
+        expToLevelUp = _playerControls.GetExpToLevelUp();
+        ninjutsuCoolDownTime = _playerControls.GetNinjutsuCoolDownTime();
+        shurikenCoolDownTime = _playerControls.GetShurikenCoolDownTime();
         
-        DebugUI();
+        textObject.text = "<color=#FF0000>HP:</color> " + health + "/" + maxHealth + "\n" +
+                          "<color=#00BDFF>Ki:</color> " + ki + "/" + maxKi + "\n" +
+                          "<color=#FFC900>Level:</color> " + level + "\n" +
+                          "<color=#FFC900>Exp:</color> " + exp + "/" + expToLevelUp + "\n" +
+                          "<color=#FF0000>Ninjutsu Cooldown:</color> " + ninjutsuCoolDownTime.ToString("F1") + "\n" +
+                          "<color=#FF0000>Shuriken Cooldown:</color> " + shurikenCoolDownTime.ToString("F1");
+        
+        
+        // DebugUI();
         
     }
     

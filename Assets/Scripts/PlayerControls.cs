@@ -12,7 +12,8 @@ public class PlayerControls : MonoBehaviour
     private int _maxKi = 5;
     private Vector3 _respawnPoint;
     private int _level = 1;
-    private int _exp = 5;
+    private int _exp = 0;
+    private int _expToLevelUp = 5;
     
     // Movement variables
     private float _horizontal;
@@ -36,6 +37,8 @@ public class PlayerControls : MonoBehaviour
     // Projectile Variables
     private bool _shotCooldown;
     private float _projectileFireRate = 1.5f;
+    private float _shurikenCoolDownTime = 1.5f;
+    private float _ninjutsuCoolDownTime = 2f;
     private Vector2 _shotDir = Vector2.right; // Sets the direction to fire bullet
     
     // Components
@@ -53,11 +56,11 @@ public class PlayerControls : MonoBehaviour
     public int GetMaxHealth() { return _maxHealth; }
     public int GetKi() { return _ki; }
     public int GetMaxKi() { return _maxKi; }
-    
-    public void SetHealth(int health) { this._health = health; }
-    public void SetMaxHealth(int maxHealth) { this._maxHealth = maxHealth; }
-    public void SetKi(int ki) { this._ki = ki; }
-    public void SetMaxKi(int maxKi) { this._maxKi = maxKi; }
+    public int GetLevel() { return _level; }
+    public int GetExp() { return _exp; }
+    public int GetExpToLevelUp() { return _expToLevelUp; }
+    public float GetNinjutsuCoolDownTime() { return _ninjutsuCoolDownTime; }
+    public float GetShurikenCoolDownTime() { return _shurikenCoolDownTime; }
     
     // Debug Method
     public Dictionary<String, String> DebugDictionary()
@@ -191,30 +194,13 @@ public class PlayerControls : MonoBehaviour
         // Shoot Shuriken
         if (Input.GetButtonDown("Shuriken") && !_shotCooldown)
         {
-            StartCoroutine(ShootShuriken());
+            ShootShuriken();
         }
 
         // Ninjutsu
-        if (!_isNinjutsuCooledDown && (Input.GetButtonDown("Fire") || Input.GetButtonDown("Ice")))
+        if (!_isNinjutsuCooledDown && (Input.GetButtonDown("Fire") || Input.GetButtonDown("Ice")) && _ki > 0)
         {
-            // Fire Ninjutsu
-            if (Input.GetButtonDown("Fire") && _ki > 0)
-            {
-                GameObject prefab = Instantiate(fireNinjutsu);
-                prefab.transform.position = transform.position;
-                prefab.GetComponent<Projectile>().moveDirection = _shotDir;
-                _ki -= prefab.GetComponent<FireNinjutsu>().GetKiCost();
-            }
-
-            // Ice Ninjutsu
-            if (Input.GetButtonDown("Ice") && _ki > 0 && IsGrounded())
-            {
-                StartCoroutine(IceNinjutsuPattern());
-                _ki -= iceNinjutsu.GetComponent<IceNinjutsu>().GetKiCost();
-            }
-            
-            _isNinjutsuCooledDown = true;
-            StartCoroutine(NinjutsuCoolDown());
+            UseNinjutsu();
         }
 
         // Health System
@@ -241,12 +227,8 @@ public class PlayerControls : MonoBehaviour
         Flip(); 
     }
     
-    // Use Ki
-    private void UseKi(int ki)
-    {
-        _ki -= ki;
-    }
-    
+
+
     // Wait for a certain amount of time
     IEnumerator Wait(float time)
     {
@@ -264,8 +246,44 @@ public class PlayerControls : MonoBehaviour
         _speed = 8f;
     }
     
-    // Fire Projectile
-    IEnumerator ShootShuriken()
+    // Use Ninjutsu
+    private void UseNinjutsu()
+    {
+        // Fire Ninjutsu
+        if (Input.GetButtonDown("Fire"))
+        {
+            GameObject prefab = Instantiate(fireNinjutsu);
+            prefab.transform.position = transform.position;
+            prefab.GetComponent<Projectile>().moveDirection = _shotDir;
+            _ki -= prefab.GetComponent<FireNinjutsu>().GetKiCost();
+        }
+
+        // Ice Ninjutsu
+        if (Input.GetButtonDown("Ice") && IsGrounded())
+        {
+            StartCoroutine(IceNinjutsuPattern());
+            _ki -= iceNinjutsu.GetComponent<IceNinjutsu>().GetKiCost();
+        }
+            
+        _isNinjutsuCooledDown = true;
+        StartCoroutine(NinjutsuCoolDown());
+    }
+    
+    // Ninjutsu Cooldown
+    IEnumerator NinjutsuCoolDown()
+    {
+        float originalTime = _ninjutsuCoolDownTime;
+        while (_ninjutsuCoolDownTime > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            _ninjutsuCoolDownTime -= 0.1f;
+        }
+        _isNinjutsuCooledDown = false;
+        _ninjutsuCoolDownTime = originalTime;
+    }
+    
+    // Shoot Shuriken
+    private void ShootShuriken()
     {
         _shotCooldown = true;
         
@@ -273,17 +291,22 @@ public class PlayerControls : MonoBehaviour
         StartCoroutine(FireProjectilePattern(_shotDir + new Vector2(0, 0.45f)));
         StartCoroutine(FireProjectilePattern(_shotDir + new Vector2(0, -0.45f)));
         
-        yield return new WaitForSeconds(_projectileFireRate);
-
-        _shotCooldown = false;
+        StartCoroutine(ShurikenCoolDown());
     }
     
-    // Ninjutsu Cooldown
-    IEnumerator NinjutsuCoolDown()
+    // Shuriken Cooldown
+    IEnumerator ShurikenCoolDown()
     {
-        yield return new WaitForSeconds(2f);
-        _isNinjutsuCooledDown = false;
+        float originalTime = _shurikenCoolDownTime;
+        while (_shurikenCoolDownTime > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            _shurikenCoolDownTime -= 0.1f;
+        }
+        _shotCooldown = false;
+        _shurikenCoolDownTime = originalTime;
     }
+
     
     // Fire Projectile Pattern
     IEnumerator FireProjectilePattern(Vector2 direction)
