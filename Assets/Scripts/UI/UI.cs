@@ -13,7 +13,6 @@ public class UI : MonoBehaviour
     private int level;
     private int exp;
     private int expToLevelUp;
-    private bool isNinjutsuCoolDown;
     private float ninjutsuCoolDownTime;
     private float shurikenCoolDownTime;
     

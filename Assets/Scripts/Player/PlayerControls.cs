@@ -35,8 +35,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private GameObject iceNinjutsu;
     
     // Projectile Variables
-    private bool _shotCooldown;
-    private float _projectileFireRate = 1.5f;
+    private bool _isShurikenCoolDown;
+    private float _shurikenFireRate = 1.5f;
     private float _shurikenCoolDownTime = 1.5f;
     private float _ninjutsuCoolDownTime = 2f;
     private Vector2 _shotDir = Vector2.right; // Sets the direction to fire bullet
@@ -59,7 +59,9 @@ public class PlayerControls : MonoBehaviour
     public int GetLevel() { return _level; }
     public int GetExp() { return _exp; }
     public int GetExpToLevelUp() { return _expToLevelUp; }
+    public bool GetIsNinjutsuCoolDown() { return _isNinjutsuCooledDown; }
     public float GetNinjutsuCoolDownTime() { return _ninjutsuCoolDownTime; }
+    public bool GetIsShurikenCoolDown() { return _isShurikenCoolDown; }
     public float GetShurikenCoolDownTime() { return _shurikenCoolDownTime; }
     
     // Debug Method
@@ -68,7 +70,7 @@ public class PlayerControls : MonoBehaviour
         Dictionary<String, String> debug = new Dictionary<String, String>();
         // debug.Add("Health", _health.ToString() + "/" + _maxHealth.ToString());
         // debug.Add("Ki", _ki.ToString() + "/" + _maxKi.ToString());
-        debug.Add("Shuriken Cooldown", _shotCooldown.ToString());
+        debug.Add("Shuriken Cooldown", _isShurikenCoolDown.ToString());
         // debug.Add("Speed", _speed.ToString());
         // debug.Add("Number of Jump", _numOfJump.ToString());
         // debug.Add("Is Facing Right", _isFacingRight.ToString());
@@ -192,7 +194,7 @@ public class PlayerControls : MonoBehaviour
         }
              
         // Shoot Shuriken
-        if (Input.GetButtonDown("Shuriken") && !_shotCooldown)
+        if (Input.GetButtonDown("Shuriken") && !_isShurikenCoolDown)
         {
             ShootShuriken();
         }
@@ -218,7 +220,7 @@ public class PlayerControls : MonoBehaviour
             _health = _maxHealth;
             _maxKi += 2;
             _ki = _maxKi;
-            _projectileFireRate -= .2f;
+            _shurikenFireRate -= .2f;
             fireNinjutsu.GetComponent<FireNinjutsu>().LevelUp();
             iceNinjutsu.GetComponent<IceNinjutsu>().LevelUp();
         }
@@ -285,7 +287,7 @@ public class PlayerControls : MonoBehaviour
     // Shoot Shuriken
     private void ShootShuriken()
     {
-        _shotCooldown = true;
+        _isShurikenCoolDown = true;
         
         StartCoroutine(FireProjectilePattern(_shotDir));
         StartCoroutine(FireProjectilePattern(_shotDir + new Vector2(0, 0.45f)));
@@ -303,7 +305,7 @@ public class PlayerControls : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             _shurikenCoolDownTime -= 0.1f;
         }
-        _shotCooldown = false;
+        _isShurikenCoolDown = false;
         _shurikenCoolDownTime = originalTime;
     }
 
