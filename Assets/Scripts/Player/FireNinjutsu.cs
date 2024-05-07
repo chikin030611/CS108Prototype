@@ -24,7 +24,6 @@ public class FireNinjutsu : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.GetComponent<Enemy>().Burn(damage);
-            Debug.Log(damage);
         }
     }
 }

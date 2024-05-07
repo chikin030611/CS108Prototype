@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,9 +18,37 @@ public class GameController : MonoBehaviour
     private bool _gameWon = false;
     private bool _gameLost = false;
     
+    public struct GameData
+    {
+        public int _health { get; set; }
+        public int _maxHealth { get; set; }
+        public int _ki { get; set; }
+        public int _maxKi { get; set; }
+        public int _level { get; set; }
+        public int _exp { get; set; }
+        public float _fireDamage { get; set; }
+        public float _iceFreezeTime { get; set; }
+        public float _shurikenFireRate { get; set; }
+    }
+    
+    public GameData gameData = new GameData();
+    
+    public static GameController Instance;
+    
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+    
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         gameOverScreenUIScript = GameOverScreen.GetComponent<GameOverScreenUI>();
         
         numOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
@@ -27,6 +57,7 @@ public class GameController : MonoBehaviour
         {
             playerControls = player.GetComponent<PlayerControls>();
         }
+        StartCoroutine(GetPlayerDataToGameData());
     }
 
     // Update is called once per frame
@@ -59,6 +90,8 @@ public class GameController : MonoBehaviour
     
     public void TransferToNextLevel()
     {
+        StartCoroutine(GetPlayerDataToGameData());
+        
         if (SceneManager.GetActiveScene().buildIndex == 2)
         {
             WinGame();
@@ -66,6 +99,19 @@ public class GameController : MonoBehaviour
         }
         Time.timeScale = 1;
         SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
+    public IEnumerator GetPlayerDataToGameData()
+    {
+        gameData._maxHealth = playerControls.GetMaxHealth();
+        gameData._health = playerControls.GetHealth();
+        gameData._maxKi = playerControls.GetMaxKi();
+        gameData._ki = playerControls.GetKi();
+        gameData._level = playerControls.GetLevel();
+        gameData._exp = playerControls.GetExp();
+        gameData._fireDamage = playerControls.GetFireDamage();
+        gameData._iceFreezeTime = playerControls.GetIceFreezeTime();
+        yield return true;
     }
     
     public bool GetObjectiveComplete()

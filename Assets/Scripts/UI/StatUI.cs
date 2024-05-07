@@ -27,6 +27,10 @@ public class StatUI : MonoBehaviour
     private GameObject _player;
     private PlayerControls _playerControls;
     
+    private GameObject _gameController;
+    private GameController _gameControllerScript;
+    private GameController.GameData _gameData;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -47,8 +51,12 @@ public class StatUI : MonoBehaviour
         {
             _playerControls = _player.GetComponent<PlayerControls>();
         }
-        
-        UpdateSprite();
+        _gameController = GameObject.Find("GameController");
+        if (_gameController != null)
+        {
+            _gameControllerScript = _gameController.GetComponent<GameController>();
+            _gameData = _gameControllerScript.gameData;
+        }
     }
 
     private void UpdateSprite()
@@ -83,6 +91,7 @@ public class StatUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateSprite();
         UpdateExpBar(_playerControls.GetExp());
         UpdateLevelText(_playerControls.GetLevel());
         

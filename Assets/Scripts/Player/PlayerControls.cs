@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
@@ -44,7 +45,11 @@ public class PlayerControls : MonoBehaviour
     private float _ninjutsuCoolDownTime = 2f;
     private Vector2 _shotDir = Vector2.right; // Sets the direction to fire bullet
     
+    // GameObjects
+    private GameObject _gameController;
+    
     // Components
+    private GameController _gameControllerScript;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _playerCollider;
@@ -62,6 +67,9 @@ public class PlayerControls : MonoBehaviour
     public int GetLevel() { return _level; }
     public int GetExp() { return _exp; }
     public int GetExpToLevelUp() { return _expToLevelUp; }
+    public bool GetIsLeveledUp() { return _isLeveledUp; }
+    public float GetFireDamage() { return _fireDamage; }
+    public float GetIceFreezeTime() { return _iceFreezeTime; }
     public bool GetIsNinjutsuCoolDown() { return _isNinjutsuCooledDown; }
     public float GetNinjutsuCoolDownTime() { return _ninjutsuCoolDownTime; }
     public bool GetIsShurikenCoolDown() { return _isShurikenCoolDown; }
@@ -117,10 +125,26 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         // Initialize Variables
-        _health = _maxHealth;
-        _ki = _maxKi;
         _groundLayer = LayerMask.GetMask("Ground");
         _respawnPoint = new Vector3(-26, -4, 0);
+        
+        // Get GameController
+        _gameController = GameObject.Find("GameController");
+        if (_gameController != null)
+        {
+            _gameControllerScript = _gameController.GetComponent<GameController>();
+            GameController.GameData gameData = _gameControllerScript.gameData;
+            
+            _maxHealth = gameData._maxHealth;
+            _health = gameData._maxHealth;
+            _maxKi = gameData._maxKi;
+            _ki = gameData._maxKi;
+            _level = gameData._level;
+            _exp = gameData._exp;
+            _fireDamage = gameData._fireDamage;
+            _iceFreezeTime = gameData._iceFreezeTime;
+        }
+        
         
         // Get Components
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -217,7 +241,6 @@ public class PlayerControls : MonoBehaviour
         // Level System
         if (_exp >= _expToLevelUp)
         {
-            
             _exp = 0;
             _level++;
             _maxHealth += 1;
@@ -227,6 +250,8 @@ public class PlayerControls : MonoBehaviour
             _shurikenFireRate -= .2f;
             _fireDamage += 0.5f;
             _iceFreezeTime += 1.5f;
+            
+            _gameControllerScript.GetPlayerDataToGameData();
             _isLeveledUp = true;
         }
         
@@ -446,10 +471,5 @@ public class PlayerControls : MonoBehaviour
     public void AddExp()
     {
         _exp++;
-    }
-
-    public bool GetIsLeveledUp()
-    {
-        return _isLeveledUp;
     }
 }
