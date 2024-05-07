@@ -59,8 +59,11 @@ public class GameController : MonoBehaviour
     
     public void TransferToNextLevel()
     {
-        Debug.Log("Player has entered the goal door!");
-
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            WinGame();
+            return;
+        }
         Time.timeScale = 1;
         SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex + 1);
     }

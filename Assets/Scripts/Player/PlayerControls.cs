@@ -12,7 +12,7 @@ public class PlayerControls : MonoBehaviour
     private int _maxKi = 5;
     private Vector3 _respawnPoint;
     private int _level = 1;
-    private int _exp = 0;
+    private int _exp = 4;
     private int _expToLevelUp = 5;
     
     // Movement variables
@@ -26,6 +26,7 @@ public class PlayerControls : MonoBehaviour
     private bool _isAttacking = false;
     private bool _isKnockedBack = false;
     private bool _isNinjutsuCooledDown = false;
+    private bool _isLeveledUp = false;
     
     // Sword Attack Variables
     [SerializeField] private GameObject swordCollision;
@@ -212,17 +213,19 @@ public class PlayerControls : MonoBehaviour
         }
         
         // Level System
-        if (_exp >= 5 || _exp >= 10)
+        if (_exp >= _expToLevelUp)
         {
-            _level++;
+            
             _exp = 0;
-            _maxHealth += 2;
+            _level++;
+            _maxHealth += 1;
             _health = _maxHealth;
-            _maxKi += 2;
+            _maxKi += 1;
             _ki = _maxKi;
             _shurikenFireRate -= .2f;
             fireNinjutsu.GetComponent<FireNinjutsu>().LevelUp();
             iceNinjutsu.GetComponent<IceNinjutsu>().LevelUp();
+            _isLeveledUp = true;
         }
         
         // Flip the character
@@ -434,5 +437,15 @@ public class PlayerControls : MonoBehaviour
         }
         _playerCollider.enabled = true;
         _spriteRenderer.color = new Color(1, 1, 1, 1);
+    }
+
+    public void AddExp()
+    {
+        _exp++;
+    }
+
+    public bool GetIsLeveledUp()
+    {
+        return _isLeveledUp;
     }
 }

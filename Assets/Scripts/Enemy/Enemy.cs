@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     private bool _isFoundPlayer = false;
     
     private GameObject _player;
+    private PlayerControls _playerControls;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     
@@ -37,6 +38,10 @@ public class Enemy : MonoBehaviour
         _playerDetector = transform.GetChild(2).GetComponent<Collider2D>();
         
         _player = GameObject.Find("Player");
+        if (_player != null)
+        {
+            _playerControls = _player.GetComponent<PlayerControls>();
+        }
         gameController = GameObject.Find("GameController");
         if (gameController != null)
         {
@@ -79,6 +84,7 @@ public class Enemy : MonoBehaviour
         if (_health <= 0)
         {
             Destroy(gameObject);
+            _playerControls.AddExp();
             gameControllerScript.DecreaseNumOfEnemies();
             Debug.Log("Enemy Died!\n Number of enemies: " + gameControllerScript.ReturnNumOfEnemies());
         }

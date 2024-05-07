@@ -48,11 +48,16 @@ public class StatUI : MonoBehaviour
             _playerControls = _player.GetComponent<PlayerControls>();
         }
         
+        UpdateSprite();
+    }
+
+    private void UpdateSprite()
+    {
         // Create the health bar GameObjects
         for (int i = 0; i < _playerControls.GetMaxHealth(); i++)
         {
             double x = i/5.5f;
-            GameObject hp = new GameObject("HP");
+            GameObject hp = new GameObject("HP"+i);
             hp.transform.SetParent(_hpBarParent.transform);
             hp.transform.localPosition = new Vector3((float)x, 0, 0);
             hp.transform.localScale = new Vector3(1, 1, 1);
@@ -60,7 +65,7 @@ public class StatUI : MonoBehaviour
             hp.GetComponent<SpriteRenderer>().sortingOrder = 1;
             _healthBarSprites.Add(hp);
         }
-        
+
         // Create the health bar GameObjects
         for (int i = 0; i < _playerControls.GetMaxKi(); i++)
         {
@@ -80,8 +85,29 @@ public class StatUI : MonoBehaviour
     {
         UpdateExpBar(_playerControls.GetExp());
         UpdateLevelText(_playerControls.GetLevel());
+        
+        if (_playerControls.GetIsLeveledUp())
+        {
+            DestroyAllHealthAndKiObjects();
+            UpdateSprite();
+        }
         UpdateHealthBar(_playerControls.GetHealth());
         UpdateKiBar(_playerControls.GetKi());
+    }
+    
+    public void DestroyAllHealthAndKiObjects()
+    {
+        foreach (var healthBar in _healthBarSprites)
+        {
+            Destroy(healthBar);
+        }
+        _healthBarSprites.Clear();
+
+        foreach (var kiBar in _kiBarSprites)
+        {
+            Destroy(kiBar);
+        }
+        _kiBarSprites.Clear();
     }
     
     public void UpdateLevelText(int level)

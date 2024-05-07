@@ -36,7 +36,6 @@ public class PopupTextUI : MonoBehaviour
             _ki = _playerControls.GetKi();
             if (_ki <= 0)
             {
-                Debug.Log("Ki is less than 0");
                 textObject.text = _text;
                 StartDecreaseAlphaCoroutine();
             } 
