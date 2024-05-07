@@ -14,6 +14,8 @@ public class PlayerControls : MonoBehaviour
     private int _level = 1;
     private int _exp = 4;
     private int _expToLevelUp = 5;
+    private float _fireDamage = 1f;
+    private float _iceFreezeTime = 2f;
     
     // Movement variables
     private float _horizontal;
@@ -223,8 +225,8 @@ public class PlayerControls : MonoBehaviour
             _maxKi += 1;
             _ki = _maxKi;
             _shurikenFireRate -= .2f;
-            fireNinjutsu.GetComponent<FireNinjutsu>().LevelUp();
-            iceNinjutsu.GetComponent<IceNinjutsu>().LevelUp();
+            _fireDamage += 0.5f;
+            _iceFreezeTime += 1.5f;
             _isLeveledUp = true;
         }
         
@@ -258,6 +260,7 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetButtonDown("Fire"))
         {
             GameObject prefab = Instantiate(fireNinjutsu);
+            prefab.GetComponent<FireNinjutsu>().damage = _fireDamage;
             prefab.transform.position = transform.position;
             prefab.GetComponent<Projectile>().moveDirection = _shotDir;
             _ki -= prefab.GetComponent<FireNinjutsu>().GetKiCost();
@@ -338,6 +341,7 @@ public class PlayerControls : MonoBehaviour
             GameObject prefab = Instantiate(iceNinjutsu,
                 position + new Vector3(x + i * interval, y, 0),
                 Quaternion.identity);
+            prefab.GetComponent<IceNinjutsu>().freezeTime = _iceFreezeTime;
             prefab.GetComponent<IceNinjutsu>().direction = dir;
             yield return new WaitForSeconds(0.2f);
         }

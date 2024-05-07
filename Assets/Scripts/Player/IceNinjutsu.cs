@@ -8,8 +8,8 @@ public class IceNinjutsu : MonoBehaviour
     private float lifeTime = 2f;
     [SerializeField] private int kiCost = 1;
     public bool direction;
-    private float freezeTime = 2f;
-    
+    public float freezeTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,8 +47,4 @@ public class IceNinjutsu : MonoBehaviour
         }
     }
 
-    public void LevelUp()
-    {
-        freezeTime += 1f;
-    }
 }
