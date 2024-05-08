@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float maxHealth = 10;
     private float _health;
     private int damage = 1;
+    [SerializeField] private int exp = 1;
     [SerializeField] private float moveSpeed = 3.5f;
     private bool _isKnockedBack = false;
     private bool _isFrozen = false;
@@ -84,7 +85,7 @@ public class Enemy : MonoBehaviour
         if (_health <= 0)
         {
             Destroy(gameObject);
-            _playerControls.AddExp();
+            _playerControls.AddExp(exp);
             gameControllerScript.DecreaseNumOfEnemies();
             Debug.Log("Enemy Died!\n Number of enemies: " + gameControllerScript.ReturnNumOfEnemies());
         }

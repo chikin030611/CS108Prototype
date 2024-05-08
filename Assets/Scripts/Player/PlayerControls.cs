@@ -468,8 +468,8 @@ public class PlayerControls : MonoBehaviour
         _spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 
-    public void AddExp()
+    public void AddExp(int exp)
     {
-        _exp++;
+        _exp += exp;
     }
 }
