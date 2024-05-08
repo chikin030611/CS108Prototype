@@ -86,8 +86,6 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
             _playerControls.AddExp(exp);
-            gameControllerScript.DecreaseNumOfEnemies();
-            Debug.Log("Enemy Died!\n Number of enemies: " + gameControllerScript.ReturnNumOfEnemies());
         }
     }
     
@@ -124,7 +122,6 @@ public class Enemy : MonoBehaviour
             _spriteRenderer.color = Color.cyan;
             if (_health <= 0)
             {
-                gameControllerScript.DecreaseNumOfEnemies();
                 Destroy(gameObject);
             }
             

@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour
         public float _shurikenFireRate { get; set; }
     }
     
-    public GameData gameData = new GameData();
+    public static GameData gameData = new GameData();
     
     public static GameController Instance;
     
@@ -46,17 +46,29 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
+    [RuntimeInitializeOnLoadMethod]
+    public static void Initialize()
+    {
+        gameData._maxHealth = 5;
+        gameData._health = 5;
+        gameData._maxKi = 5;
+        gameData._ki = 5;
+        gameData._level = 1;
+        gameData._exp = 4;
+        gameData._fireDamage = 1f;
+        gameData._iceFreezeTime = 2f;
+        gameData._shurikenFireRate = 0.5f;
+    }
+    
     // Start is called before the first frame update
     void Start()
     { 
         gameOverScreenUIScript = GameOverScreen.GetComponent<GameOverScreenUI>();
         
-        numOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         player = GameObject.Find("Player");
         if (player != null)
         {
             playerControls = player.GetComponent<PlayerControls>();
-            StartCoroutine(GetPlayerDataToGameData());
         }
     }
 
@@ -71,11 +83,6 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0;
             _gameLost = true;
         }
-        // if (numOfEnemies <= 0 && !_objectiveComplete)
-        // {
-        //     Instantiate(GoalDoor, new Vector3(38, -5, 0), Quaternion.identity);
-        //     _objectiveComplete = true;
-        // }
         
         if (_gameWon || _gameLost)
         {
@@ -135,15 +142,5 @@ public class GameController : MonoBehaviour
         Instantiate(GameOverScreen, new Vector3(0, 0, 0), Quaternion.identity);
         Time.timeScale = 0;
         _gameWon = true;
-    }
-    
-    public int ReturnNumOfEnemies()
-    {
-        return numOfEnemies;
-    }
-
-    public void DecreaseNumOfEnemies()
-    {
-        numOfEnemies--;
     }
 }

@@ -55,7 +55,6 @@ public class StatUI : MonoBehaviour
         if (_gameController != null)
         {
             _gameControllerScript = _gameController.GetComponent<GameController>();
-            _gameData = _gameControllerScript.gameData;
         }
     }
 

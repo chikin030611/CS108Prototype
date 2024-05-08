@@ -8,15 +8,15 @@ public class PlayerControls : MonoBehaviour
 {
     // Character Variables
     private int _health;
-    private int _maxHealth = 5;
+    private int _maxHealth;
     private int _ki;
-    private int _maxKi = 5;
+    private int _maxKi;
     private Vector3 _respawnPoint;
-    private int _level = 1;
-    private int _exp = 4;
+    private int _level;
+    private int _exp;
     private int _expToLevelUp = 5;
-    private float _fireDamage = 1f;
-    private float _iceFreezeTime = 2f;
+    private float _fireDamage;
+    private float _iceFreezeTime;
     
     // Movement variables
     private float _horizontal;
@@ -133,12 +133,12 @@ public class PlayerControls : MonoBehaviour
         if (_gameController != null)
         {
             _gameControllerScript = _gameController.GetComponent<GameController>();
-            GameController.GameData gameData = _gameControllerScript.gameData;
+            GameController.GameData gameData = GameController.gameData;
             
             _maxHealth = gameData._maxHealth;
-            _health = gameData._maxHealth;
+            _health = gameData._health;
             _maxKi = gameData._maxKi;
-            _ki = gameData._maxKi;
+            _ki = gameData._ki;
             _level = gameData._level;
             _exp = gameData._exp;
             _fireDamage = gameData._fireDamage;
@@ -250,7 +250,6 @@ public class PlayerControls : MonoBehaviour
             _shurikenFireRate -= .2f;
             _fireDamage += 0.5f;
             _iceFreezeTime += 1.5f;
-            
             _gameControllerScript.GetPlayerDataToGameData();
             _isLeveledUp = true;
         }
