@@ -56,8 +56,8 @@ public class GameController : MonoBehaviour
         if (player != null)
         {
             playerControls = player.GetComponent<PlayerControls>();
+            StartCoroutine(GetPlayerDataToGameData());
         }
-        StartCoroutine(GetPlayerDataToGameData());
     }
 
     // Update is called once per frame
@@ -71,11 +71,11 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0;
             _gameLost = true;
         }
-        if (numOfEnemies <= 0 && !_objectiveComplete)
-        {
-            Instantiate(GoalDoor, new Vector3(38, -5, 0), Quaternion.identity);
-            _objectiveComplete = true;
-        }
+        // if (numOfEnemies <= 0 && !_objectiveComplete)
+        // {
+        //     Instantiate(GoalDoor, new Vector3(38, -5, 0), Quaternion.identity);
+        //     _objectiveComplete = true;
+        // }
         
         if (_gameWon || _gameLost)
         {
@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour
     {
         StartCoroutine(GetPlayerDataToGameData());
         
-        if (SceneManager.GetActiveScene().buildIndex == 2)
+        if (SceneManager.GetActiveScene().buildIndex == 3)
         {
             WinGame();
             return;
