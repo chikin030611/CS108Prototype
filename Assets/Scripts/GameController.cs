@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
         gameData._maxKi = 5;
         gameData._ki = 5;
         gameData._level = 1;
-        gameData._exp = 4;
+        gameData._exp = 0;
         gameData._fireDamage = 1f;
         gameData._iceFreezeTime = 2f;
         gameData._shurikenFireRate = 0.5f;

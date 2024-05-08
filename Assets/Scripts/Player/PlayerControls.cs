@@ -417,7 +417,6 @@ public class PlayerControls : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
-            Knockback();
             TakeDamage(1);
         }
     }
@@ -444,6 +443,7 @@ public class PlayerControls : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _health -= damage;
+        Knockback();
         Invincible();
     }
 

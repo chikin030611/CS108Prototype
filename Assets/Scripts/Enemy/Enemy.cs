@@ -14,8 +14,8 @@ public class Enemy : MonoBehaviour
     private bool _isKnockedBack = false;
     private bool _isFrozen = false;
     private bool _isBurning = false;
-    private bool _isFacingRight = false;
-    private bool _isFoundPlayer = false;
+    public bool isFacingRight = false;
+    public bool isFoundPlayer = false;
     
     private GameObject _player;
     private PlayerControls _playerControls;
@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     
     private GameObject gameController;
     private GameController gameControllerScript;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -54,16 +55,16 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _isFacingRight = transform.position.x > _player.transform.position.x;
-        _spriteRenderer.flipX = _isFacingRight;
+        isFacingRight = transform.position.x > _player.transform.position.x;
+        _spriteRenderer.flipX = isFacingRight;
         
         if (_playerDetector.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
-            _isFoundPlayer = true;
+            isFoundPlayer = true;
         }
         
         // follow player
-        if (_isFoundPlayer)
+        if (isFoundPlayer)
         {
             transform.position = Vector2.MoveTowards(transform.position, _player.transform.position,
                 moveSpeed * Time.deltaTime);
