@@ -40,7 +40,6 @@ public class PlayerControls : MonoBehaviour
     
     // Projectile Variables
     private bool _isShurikenCoolDown;
-    private float _shurikenFireRate = 1.5f;
     private float _shurikenCoolDownTime = 1.5f;
     private float _ninjutsuCoolDownTime = 2f;
     private Vector2 _shotDir = Vector2.right; // Sets the direction to fire bullet
@@ -247,7 +246,7 @@ public class PlayerControls : MonoBehaviour
             _health = _maxHealth;
             _maxKi += 1;
             _ki = _maxKi;
-            _shurikenFireRate -= .2f;
+            _shurikenCoolDownTime -= .3f;
             _fireDamage += 0.5f;
             _iceFreezeTime += 1.5f;
             _gameControllerScript.GetPlayerDataToGameData();
@@ -304,14 +303,13 @@ public class PlayerControls : MonoBehaviour
     // Ninjutsu Cooldown
     IEnumerator NinjutsuCoolDown()
     {
-        float originalTime = _ninjutsuCoolDownTime;
-        while (_ninjutsuCoolDownTime > 0)
+        float cdTime = _ninjutsuCoolDownTime;
+        while (cdTime > 0)
         {
             yield return new WaitForSeconds(0.1f);
-            _ninjutsuCoolDownTime -= 0.1f;
+            cdTime -= 0.1f;
         }
         _isNinjutsuCooledDown = false;
-        _ninjutsuCoolDownTime = originalTime;
     }
     
     // Shoot Shuriken
