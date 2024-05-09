@@ -6,7 +6,8 @@ public class ArcherEnemy : MonoBehaviour
 {
     private Enemy _enemy;
     [SerializeField] private GameObject projectilePrefab;
-    private bool isShooting = false; // Add this line
+    [SerializeField] private float shootingRate = 2f;
+    private bool isShooting = false; 
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,10 @@ public class ArcherEnemy : MonoBehaviour
     {
         if (_enemy.isFoundPlayer && !isShooting) // Check if isShooting is false
         {
-            StartCoroutine(ShootArrows());
+            if (!_enemy.isFrozen)
+            {
+                StartCoroutine(ShootArrows());
+            }
         }
     }
 
@@ -28,8 +32,11 @@ public class ArcherEnemy : MonoBehaviour
         isShooting = true; // Set isShooting to true at the start of the coroutine
         GameObject prefab = Instantiate(projectilePrefab);
         prefab.transform.position = transform.position;
-        prefab.GetComponent<Projectile>().moveDirection = _enemy.isFacingRight ? Vector2.left : Vector2.right;
-        yield return new WaitForSeconds(2f);
+        if (prefab.GetComponent<Projectile>() != null)
+        {
+            prefab.GetComponent<Projectile>().moveDirection = _enemy.isFacingRight ? Vector2.left : Vector2.right;
+        }
+        yield return new WaitForSeconds(shootingRate);
         isShooting = false; // Set isShooting to false after the coroutine has finished
     }
 }

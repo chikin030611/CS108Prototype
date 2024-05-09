@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int exp = 1;
     [SerializeField] private float moveSpeed = 3.5f;
     private bool _isKnockedBack = false;
-    private bool _isFrozen = false;
+    public bool isFrozen = false;
     private bool _isBurning = false;
     public bool isFacingRight = false;
     public bool isFoundPlayer = false;
@@ -28,6 +29,7 @@ public class Enemy : MonoBehaviour
     private GameObject gameController;
     private GameController gameControllerScript;
     
+    private Color _originalColor;
     
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,8 @@ public class Enemy : MonoBehaviour
         _burningParticleSystem = GetComponent<ParticleSystem>();
         _burningParticleSystem.Stop();
         _playerDetector = transform.GetChild(2).GetComponent<Collider2D>();
+        
+        _originalColor = _spriteRenderer.color;
         
         _player = GameObject.Find("Player");
         if (_player != null)
@@ -93,7 +97,7 @@ public class Enemy : MonoBehaviour
     IEnumerator FlashRed()
     {
         yield return new WaitForSeconds(0.1f);
-        _spriteRenderer.color = Color.white;
+        _spriteRenderer.color = _originalColor;
     }
 
     public void KnockBack()
@@ -115,9 +119,9 @@ public class Enemy : MonoBehaviour
 
     public void Freeze(float freezeTime)
     {
-        if (!_isFrozen)
+        if (!isFrozen)
         {
-            _isFrozen = true;
+            isFrozen = true;
             moveSpeed = 0;
             _health -= damage;
             _spriteRenderer.color = Color.cyan;
@@ -133,9 +137,9 @@ public class Enemy : MonoBehaviour
     IEnumerator StopFreeze(float freezeTime)
     {
         yield return new WaitForSeconds(freezeTime);
-        _isFrozen = false;
+        isFrozen = false;
         moveSpeed = 3.5f;
-        _spriteRenderer.color = Color.white;
+        _spriteRenderer.color = _originalColor;
     }
 
     public void Burn(float damage)
@@ -153,7 +157,7 @@ public class Enemy : MonoBehaviour
             TakeDamage(damage);
             _spriteRenderer.color = Color.red;
             yield return new WaitForSeconds(0.5f);
-            _spriteRenderer.color = Color.white;
+            _spriteRenderer.color = _originalColor;
             yield return new WaitForSeconds(0.5f);
         }
         _burningParticleSystem.Stop();

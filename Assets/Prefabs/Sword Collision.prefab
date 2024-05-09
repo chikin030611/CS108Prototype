@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2863792509971315601}
   m_Layer: 0
   m_Name: Sword Collision
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.921875, y: 1.0625}
+    oldSize: {x: 1.703125, y: 2.421875}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
