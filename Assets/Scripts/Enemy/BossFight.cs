@@ -57,8 +57,8 @@ public class BossFight : MonoBehaviour
             _attackInterval = _enemyIsFrozen? _attackInterval + _playerFreezeTime : 3f;
             int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
             
-            int randomAttack = Random.Range(0,3);
-            // int randomAttack = 1;
+            // int randomAttack = Random.Range(0,3);
+            int randomAttack = 1;
             
             switch (randomAttack)
             {
@@ -112,7 +112,7 @@ public class BossFight : MonoBehaviour
         for (int i = y[level][0]; i >= y[level][1]; i--)
         {
             _projectileScript.moveDirection = x < 0? Vector2.right : Vector2.left;
-            _projectileScript.lifeTime = 5f;
+            _projectileScript.lifeTime = 10f;
             _projectileScript.moveSpeed = 7.3f;
             Instantiate(arrow, new Vector3(x, i, 0), Quaternion.identity);
         }

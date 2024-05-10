@@ -1,4 +1,8 @@
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class TrackingProjectile : MonoBehaviour
 {
@@ -46,7 +50,12 @@ public class TrackingProjectile : MonoBehaviour
 
             // Update the positions of the LineRenderer
             _lineRenderer.SetPosition(0, transform.position);
-            _lineRenderer.SetPosition(1, _player.transform.position);
+            _lineRenderer.SetPosition(1, transform.position);
+            if (Vector2.Distance(_player.transform.position, transform.position) < 22)
+            {
+                _lineRenderer.SetPosition(1, _player.transform.position);
+            }
+            
         }
     }
     
