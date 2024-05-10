@@ -4,7 +4,7 @@ public class Projectile : MonoBehaviour
 {
     public Vector2 moveDirection;
     public float moveSpeed = 10f;
-    [SerializeField] private float lifeTime = 2f;
+    [SerializeField] public float lifeTime = 2f;
     [SerializeField] private float interval = 0.5f;
     
     private Rigidbody2D _rb;
