@@ -63,7 +63,23 @@ public class BossFight : MonoBehaviour
     private void spawnArrows()
     {
         bool dir = Random.Range(0, 2) == 0;
-        int level = Random.Range(0, 3);
+        
+        // > 0 high
+        // -3 to 0 middle
+        // < -3 low
+        int level;
+        if (_player.transform.position.y < -3)
+        {
+            level = 2;
+        } 
+        else if (_player.transform.position.y > 0)
+        {
+            level = 0;
+        }
+        else
+        {
+            level = 1;
+        }
         
         int x = dir? -26 : 26;
         int[][] y = new int[3][];
