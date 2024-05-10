@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f14269d2fbf41c792c32b3be5c07df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heal: 1
+  heal: 2
   isHealthPotion: 1
 --- !u!61 &-312868569385001856
 BoxCollider2D:

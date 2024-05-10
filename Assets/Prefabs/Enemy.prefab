@@ -176,8 +176,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c360130717fa748338803aadf041a2e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 1
+  exp: 0
   moveSpeed: 3
+  isFrozen: 0
+  isFacingRight: 0
+  isFoundPlayer: 1
 --- !u!198 &3308086461212137434
 ParticleSystem:
   m_ObjectHideFlags: 0

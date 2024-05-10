@@ -4,11 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 // TODO:
-// 2. Add shuriken attack
-// 3. Add boss health bar
-// 4. Add victory screen
-// 5. Add arrows alert
-// 6. Add potions spawning
+// 1. Add victory screen
+// 2. Add potions spawning
+// 3. Fix enemy spawning
+
 
 // level recommendation: 3-5
 public class BossFight : MonoBehaviour
@@ -37,6 +36,19 @@ public class BossFight : MonoBehaviour
         StartCoroutine(attack());
     }
 
+    void Update()
+    {
+        if (_enemyScript.IsDestroyed())
+        {
+            // Destroy all enemies
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject enemy in enemies)
+            {
+                Destroy(enemy);
+            }
+        }
+    }
+
     IEnumerator attack()
     {
         while (true)
@@ -46,7 +58,7 @@ public class BossFight : MonoBehaviour
             int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
             
             int randomAttack = Random.Range(0,3);
-            // int randomAttack = 0;
+            // int randomAttack = 1;
             
             switch (randomAttack)
             {
@@ -54,7 +66,7 @@ public class BossFight : MonoBehaviour
                     spawnArrows();
                     break;
                 case 1:
-                    spawnTrackingArrows(Random.Range(0, 2));
+                    spawnTrackingArrows();
                     break;
                 case 2:
                     if (enemyCount >= 4) break;
@@ -90,7 +102,7 @@ public class BossFight : MonoBehaviour
             level = 1;
         }
         
-        int x = dir? -26 : 26;
+        int x = dir? -33 : 33;
         int[][] y = new int[3][];
         y[0] = new int[] {5, 2};
         y[1] = new int[] {-1, -3};
@@ -106,21 +118,10 @@ public class BossFight : MonoBehaviour
         }
     }
     
-    private void spawnTrackingArrows(int rand)
+    private void spawnTrackingArrows()
     {
-        switch (rand)
-        {
-            case 0:
-                Instantiate(trackingArrow, new Vector3(-26, 2, 0), Quaternion.identity);
-                Instantiate(trackingArrow, new Vector3(-26, 0, 0), Quaternion.identity);
-                Instantiate(trackingArrow, new Vector3(-26, -2, 0), Quaternion.identity);
-                break;
-            case 1:
-                Instantiate(trackingArrow, new Vector3(26, 2, 0), Quaternion.Inverse(Quaternion.identity));
-                Instantiate(trackingArrow, new Vector3(26, 0, 0), Quaternion.Inverse(Quaternion.identity) );
-                Instantiate(trackingArrow, new Vector3(26, -2, 0), Quaternion.Inverse(Quaternion.identity));
-                break;
-        }
+        Instantiate(trackingArrow, new Vector3(-33, 0, 0), Quaternion.Inverse(Quaternion.identity));
+        Instantiate(trackingArrow, new Vector3(33, 0, 0), Quaternion.Inverse(Quaternion.identity));
     }
     
     private void spawnEnemy()

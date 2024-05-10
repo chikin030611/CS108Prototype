@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: -406381228201961015}
   m_Layer: 0
   m_Name: Tracking Enemy Arrow
-  m_TagString: Untagged
+  m_TagString: Tracking Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   moveSpeed: 10
   lifeTime: 60
   interval: 0.5
+  _line: {fileID: 1383177630156377555, guid: 095ad34445e904ab2ae37c3410183558, type: 3}
 --- !u!50 &-406381228201961015
 Rigidbody2D:
   serializedVersion: 4

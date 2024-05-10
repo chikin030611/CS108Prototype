@@ -10,6 +10,10 @@ public class TrackingProjectile : MonoBehaviour
     private GameObject _player;
     private GameObject _childObject;
     private SpriteRenderer _spriteRenderer;
+    
+    private GameObject _trackingArrow;
+    [SerializeField] private GameObject _line;
+    private LineRenderer _lineRenderer;
 
     void Start()
     {
@@ -17,6 +21,10 @@ public class TrackingProjectile : MonoBehaviour
         _player = GameObject.Find("Player");
         _childObject = transform.GetChild(0).gameObject;
         _spriteRenderer = _childObject.GetComponent<SpriteRenderer>();
+
+        _line = Instantiate(_line);
+        _lineRenderer = _line.GetComponent<LineRenderer>();
+        
         Destroy(gameObject, lifeTime);
     }
 
@@ -26,7 +34,7 @@ public class TrackingProjectile : MonoBehaviour
         {
             Vector2 direction = (_player.transform.position - transform.position).normalized;
             transform.Translate(direction * (moveSpeed * Time.deltaTime));
-            
+
             // Calculate the angle in radians
             float angle = Mathf.Atan2(direction.y, direction.x);
 
@@ -35,6 +43,10 @@ public class TrackingProjectile : MonoBehaviour
 
             // Rotate the sprite
             _childObject.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            // Update the positions of the LineRenderer
+            _lineRenderer.SetPosition(0, transform.position);
+            _lineRenderer.SetPosition(1, _player.transform.position);
         }
     }
     
@@ -43,11 +55,12 @@ public class TrackingProjectile : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<PlayerControls>().TakeDamage(1);
+            Destroy(_line);
             Destroy(gameObject);
         } 
         if (other.gameObject.CompareTag("Shuriken") || other.gameObject.CompareTag("Sword") || other.gameObject.CompareTag("Ninjutsu"))
         {
-            Debug.Log("TrackingProjectile.cs: OnTriggerEnter2D: Destroy(gameObject);");
+            Destroy(_line);
             Destroy(gameObject);
         }
     }

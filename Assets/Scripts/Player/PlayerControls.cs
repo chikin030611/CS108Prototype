@@ -209,7 +209,7 @@ public class PlayerControls : MonoBehaviour
             else
             {
                 Instantiate(swordCollision,
-                    transform.position + new Vector3(_shotDir.x, _shotDir.y, 0),
+                    transform.position + new Vector3(_shotDir.x+0.3f, _shotDir.y, 0),
                     Quaternion.identity);
                 StartCoroutine(Wait(0.8f));
             }

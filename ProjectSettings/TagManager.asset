@@ -9,6 +9,7 @@ TagManager:
   - Shuriken
   - Sword
   - Ninjutsu
+  - Tracking Arrow
   layers:
   - Default
   - TransparentFX
