@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float maxHealth = 10;
     private float _health;
     private int damage = 1;
-    [SerializeField] private int exp = 1;
+    public int exp = 1;
     [SerializeField] private float moveSpeed = 3.5f;
     private bool _isKnockedBack = false;
     public bool isFrozen = false;
@@ -38,6 +38,14 @@ public class Enemy : MonoBehaviour
     public void SetMaxHealth(float health)
     {
         maxHealth = health;
+    }
+    public float GetHealth()
+    {
+        return _health;
+    }
+    public void SetHealth(float health)
+    {
+        _health = health;
     }
     
     // Start is called before the first frame update

@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// TODO:
+// 2. Add shuriken attack
+// 3. Add boss health bar
+// 4. Add victory screen
+// 5. Add arrows alert
+// 6. Add potions spawning
+
+// level recommendation: 3-5
 public class BossFight : MonoBehaviour
 {
     private bool _enemyIsFrozen;
@@ -14,6 +22,7 @@ public class BossFight : MonoBehaviour
     public List<GameObject> enemiesList;
     // public GameObject shuriken;
 
+    private Projectile _projectileScript;
     private Enemy _enemyScript;
     private GameObject _player;
     
@@ -36,8 +45,8 @@ public class BossFight : MonoBehaviour
             _attackInterval = _enemyIsFrozen? _attackInterval + _playerFreezeTime : 3f;
             int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
             
-            // int randomAttack = Random.Range(0,3);
-            int randomAttack = 0;
+            int randomAttack = Random.Range(0,3);
+            // int randomAttack = 0;
             
             switch (randomAttack)
             {
@@ -87,10 +96,12 @@ public class BossFight : MonoBehaviour
         y[1] = new int[] {-1, -3};
         y[2] = new int[] {-5, -6};
         
+        _projectileScript = arrow.GetComponent<Projectile>();
         for (int i = y[level][0]; i >= y[level][1]; i--)
         {
-            arrow.GetComponent<Projectile>().moveDirection = x < 0? Vector2.right : Vector2.left;
-            arrow.GetComponent<Projectile>().lifeTime = 5f;
+            _projectileScript.moveDirection = x < 0? Vector2.right : Vector2.left;
+            _projectileScript.lifeTime = 5f;
+            _projectileScript.moveSpeed = 7.3f;
             Instantiate(arrow, new Vector3(x, i, 0), Quaternion.identity);
         }
     }
@@ -100,14 +111,14 @@ public class BossFight : MonoBehaviour
         switch (rand)
         {
             case 0:
-                Instantiate(trackingArrow, new Vector3(-21, 2, 0), Quaternion.identity);
-                Instantiate(trackingArrow, new Vector3(-21, 0, 0), Quaternion.identity);
-                Instantiate(trackingArrow, new Vector3(-21, -2, 0), Quaternion.identity);
+                Instantiate(trackingArrow, new Vector3(-26, 2, 0), Quaternion.identity);
+                Instantiate(trackingArrow, new Vector3(-26, 0, 0), Quaternion.identity);
+                Instantiate(trackingArrow, new Vector3(-26, -2, 0), Quaternion.identity);
                 break;
             case 1:
-                Instantiate(trackingArrow, new Vector3(21, 2, 0), Quaternion.Inverse(Quaternion.identity));
-                Instantiate(trackingArrow, new Vector3(21, 0, 0), Quaternion.Inverse(Quaternion.identity) );
-                Instantiate(trackingArrow, new Vector3(21, -2, 0), Quaternion.Inverse(Quaternion.identity));
+                Instantiate(trackingArrow, new Vector3(26, 2, 0), Quaternion.Inverse(Quaternion.identity));
+                Instantiate(trackingArrow, new Vector3(26, 0, 0), Quaternion.Inverse(Quaternion.identity) );
+                Instantiate(trackingArrow, new Vector3(26, -2, 0), Quaternion.Inverse(Quaternion.identity));
                 break;
         }
     }
@@ -117,8 +128,10 @@ public class BossFight : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             GameObject enemy = enemiesList[Random.Range(0, enemiesList.Count)];
-            enemy.GetComponent<Enemy>().SetMaxHealth(1);
-            enemy.GetComponent<Enemy>().isFoundPlayer = true;
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            enemyScript.SetMaxHealth(1);
+            enemyScript.isFoundPlayer = true;
+            enemyScript.exp = 0;
             Instantiate(enemy, new Vector3(Random.Range(-20, 20), Random.Range(-5, 5), 0), Quaternion.identity);
         }
     }
