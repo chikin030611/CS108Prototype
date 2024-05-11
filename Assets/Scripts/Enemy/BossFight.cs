@@ -51,6 +51,7 @@ public class BossFight : MonoBehaviour
 
     IEnumerator attack()
     {
+        yield return new WaitForSeconds(2f);
         while (true)
         {
             _enemyIsFrozen = _enemyScript.isFrozen;

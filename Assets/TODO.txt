@@ -1,7 +1,6 @@
 /*
  * TODO:
  * - Fix player wont die after dies once
- * - Add buffer time before boss fight
  * - Add potion spawning in boss fight
  * - Fix enemy spawning position in boss fight
  * - Fix game lagging after a long time
