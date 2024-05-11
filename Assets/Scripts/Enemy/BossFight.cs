@@ -12,6 +12,8 @@ public class BossFight : MonoBehaviour
     private float _playerFreezeTime;
     private float _attackInterval = 3f;
     
+    public GameObject healthPotion;
+    public GameObject kiPotion;
     public GameObject arrow;
     public GameObject trackingArrow;
     public List<GameObject> enemiesList;
@@ -34,24 +36,12 @@ public class BossFight : MonoBehaviour
             _playerFreezeTime = _player.GetComponent<PlayerControls>().GetIceFreezeTime();
         }
         StartCoroutine(attack());
-    }
-
-    void Update()
-    {
-        if (_enemyScript.IsDestroyed())
-        {
-            // Destroy all enemies
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
-            {
-                Destroy(enemy);
-            }
-        }
+        StartCoroutine(SpawnPotion());
     }
 
     IEnumerator attack()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         while (true)
         {
             _enemyIsFrozen = _enemyScript.isFrozen;
@@ -142,9 +132,28 @@ public class BossFight : MonoBehaviour
             enemyScript.exp = 0;
         }
     }
+    
+    IEnumerator SpawnPotion()
+    {
+        bool spawnHealthPotion = true;
+        while (true)
+        {
+            GameObject potion = spawnHealthPotion ? healthPotion : kiPotion;
+
+            yield return new WaitForSeconds(10f);
+            Instantiate(potion, new Vector3(Random.Range(-20, 20), Random.Range(-5, 5), 0), Quaternion.identity);
+            
+            spawnHealthPotion = !spawnHealthPotion;
+        }
+    }
 
     public void OnDestroy()
     {
         _goalDoor.SetActive(true);
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
     }
 }

@@ -4993,6 +4993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4809ec18dc50b4691895c994738e13d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPotion: {fileID: 5442454936369131903, guid: 15e75b20df2474643b17613f5025bad3, type: 3}
+  kiPotion: {fileID: 5442454936369131903, guid: 7d01095ecd3e1414cad18ae49872ef9d, type: 3}
   arrow: {fileID: 4592859596603203965, guid: f1b90a6dc528c459ca0dd388a9f1ed65, type: 3}
   trackingArrow: {fileID: 4592859596603203965, guid: 6980c4d52c82b433a8d2c3975e6bd908, type: 3}
   enemiesList:
