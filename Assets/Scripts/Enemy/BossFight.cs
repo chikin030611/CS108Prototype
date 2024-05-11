@@ -59,7 +59,7 @@ public class BossFight : MonoBehaviour
             int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
             
             int randomAttack = Random.Range(0,3);
-            // int randomAttack = 1;
+            // int randomAttack = 2;
             
             switch (randomAttack)
             {
@@ -127,7 +127,15 @@ public class BossFight : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             GameObject enemyPrefab = enemiesList[Random.Range(0, enemiesList.Count)];
-            GameObject enemyInstance = Instantiate(enemyPrefab, new Vector3(Random.Range(-20, 20), Random.Range(-5, 5), 0), Quaternion.identity);
+            Vector3 spawnPosition;
+    
+            // Ensure the enemy does not spawn too close to the player
+            do
+            {
+                spawnPosition = new Vector3(Random.Range(-20, 20), Random.Range(-5, 5), 0);
+            } while (Vector3.Distance(spawnPosition, _player.transform.position) < 5); // Change '5' to the minimum distance you want
+    
+            GameObject enemyInstance = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             Enemy enemyScript = enemyInstance.GetComponent<Enemy>();
             enemyScript.SetMaxHealth(1);
             enemyScript.isFoundPlayer = true;
