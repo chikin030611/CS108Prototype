@@ -8,7 +8,6 @@ using UnityEngine;
 // 2. Add potions spawning
 // 3. Fix enemy spawning
 
-
 // level recommendation: 3-5
 public class BossFight : MonoBehaviour
 {
@@ -57,8 +56,8 @@ public class BossFight : MonoBehaviour
             _attackInterval = _enemyIsFrozen? _attackInterval + _playerFreezeTime : 3f;
             int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
             
-            // int randomAttack = Random.Range(0,3);
-            int randomAttack = 1;
+            int randomAttack = Random.Range(0,3);
+            // int randomAttack = 1;
             
             switch (randomAttack)
             {
@@ -128,12 +127,12 @@ public class BossFight : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
         {
-            GameObject enemy = enemiesList[Random.Range(0, enemiesList.Count)];
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            GameObject enemyPrefab = enemiesList[Random.Range(0, enemiesList.Count)];
+            GameObject enemyInstance = Instantiate(enemyPrefab, new Vector3(Random.Range(-20, 20), Random.Range(-5, 5), 0), Quaternion.identity);
+            Enemy enemyScript = enemyInstance.GetComponent<Enemy>();
             enemyScript.SetMaxHealth(1);
             enemyScript.isFoundPlayer = true;
             enemyScript.exp = 0;
-            Instantiate(enemy, new Vector3(Random.Range(-20, 20), Random.Range(-5, 5), 0), Quaternion.identity);
         }
     }
     
