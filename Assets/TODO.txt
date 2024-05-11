@@ -1,5 +1,4 @@
 /*
  * TODO:
- * - Fix player wont die after dies once (maybe fixed)
- * - Fix game lagging after a long time
+ * - Shuriken fire rate level up?
  */
