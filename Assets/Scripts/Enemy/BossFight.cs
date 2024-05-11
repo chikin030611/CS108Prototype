@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 // level recommendation: 3-5
 public class BossFight : MonoBehaviour
@@ -18,11 +20,15 @@ public class BossFight : MonoBehaviour
     private Projectile _projectileScript;
     private Enemy _enemyScript;
     private GameObject _player;
+
+    private GameObject _goalDoor;
     
     void Start()
     {
         _enemyScript = GetComponent<Enemy>();
         _player = GameObject.Find("Player");
+        _goalDoor = GameObject.Find("Goal Door");
+        _goalDoor.SetActive(false);
         if (_player != null)
         {
             _playerFreezeTime = _player.GetComponent<PlayerControls>().GetIceFreezeTime();
@@ -65,9 +71,6 @@ public class BossFight : MonoBehaviour
                 case 2:
                     if (enemyCount >= 4) break;
                     spawnEnemy();
-                    break;
-                case 3:
-                    spawnShuriken();
                     break;
             }
             yield return new WaitForSeconds(_attackInterval);
@@ -130,10 +133,9 @@ public class BossFight : MonoBehaviour
             enemyScript.exp = 0;
         }
     }
-    
-    private void spawnShuriken()
-    {
-        
-    }
 
+    public void OnDestroy()
+    {
+        _goalDoor.SetActive(true);
+    }
 }

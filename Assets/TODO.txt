@@ -1,9 +1,8 @@
 /*
  * TODO:
- * - Fix game controller not getting game data when going to the next level
  * - Fix player wont die after dies once
- * - Add winning door in boss fight
+ * - Add buffer time before boss fight
  * - Add potion spawning in boss fight
- * - Fix enemy spawning in boss fight
+ * - Fix enemy spawning position in boss fight
  * - Fix game lagging after a long time
  */
