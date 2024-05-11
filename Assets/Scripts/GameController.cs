@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
         gameData._exp = 0;
         gameData._fireDamage = 1f;
         gameData._iceFreezeTime = 2f;
-        gameData._shurikenFireRate = 0.5f;
+        gameData._shurikenFireRate = 1.5f;
     }
     
     // Start is called before the first frame update

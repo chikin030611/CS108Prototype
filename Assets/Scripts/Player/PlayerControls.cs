@@ -137,6 +137,7 @@ public class PlayerControls : MonoBehaviour
             _exp = gameData._exp;
             _fireDamage = gameData._fireDamage;
             _iceFreezeTime = gameData._iceFreezeTime;
+            _shurikenCoolDownTime = gameData._shurikenFireRate;
         }
     }
     
@@ -246,10 +247,9 @@ public class PlayerControls : MonoBehaviour
             _health = _maxHealth;
             _maxKi += 1;
             _ki = _maxKi;
-            _shurikenCoolDownTime -= .3f;
+            _shurikenCoolDownTime -= .2f;
             _fireDamage += 0.5f;
             _iceFreezeTime += 1.5f;
-            _gameControllerScript.GetPlayerDataToGameData();
             _isLeveledUp = true;
         }
         
