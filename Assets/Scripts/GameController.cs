@@ -44,6 +44,17 @@ public class GameController : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Update the playerControls reference
+        player = GameObject.Find("Player");
+        if (player != null)
+        {
+            playerControls = player.GetComponent<PlayerControls>();
+        }
     }
     
     [RuntimeInitializeOnLoadMethod]
@@ -89,7 +100,8 @@ public class GameController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 Time.timeScale = 1;
-
+                _gameWon = false;
+                _gameLost = false;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
@@ -97,15 +109,19 @@ public class GameController : MonoBehaviour
     
     public void TransferToNextLevel()
     {
-        StartCoroutine(GetPlayerDataToGameData());
-        
-        if (SceneManager.GetActiveScene().buildIndex == 3)
+        if (SceneManager.GetActiveScene().buildIndex == 4)
         {
             WinGame();
             return;
         }
+        StartCoroutine(TransferToNextLevelCoroutine());
+    }
+
+    private IEnumerator TransferToNextLevelCoroutine()
+    {
+        yield return StartCoroutine(GetPlayerDataToGameData());
         Time.timeScale = 1;
-        SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     
     public IEnumerator GetPlayerDataToGameData()
@@ -118,7 +134,8 @@ public class GameController : MonoBehaviour
         gameData._exp = playerControls.GetExp();
         gameData._fireDamage = playerControls.GetFireDamage();
         gameData._iceFreezeTime = playerControls.GetIceFreezeTime();
-        yield return true;
+        gameData._shurikenFireRate = playerControls.GetShurikenCoolDownTime();
+        yield return new WaitUntil(() => gameData._iceFreezeTime == playerControls.GetIceFreezeTime());
     }
     
     public bool GetObjectiveComplete()

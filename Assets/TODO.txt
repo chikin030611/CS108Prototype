@@ -1,16 +1,9 @@
 /*
  * TODO:
- * - Fix enemies number in GameController √
- * - When all enemies are defeated, a glowing door appears at the end of the level √
- * - hints the player to go to the door √
- * - Add winning and losing screen √
- * - Add restart button in winning and losing screen √
- * - Add sprite for the enemy and fire effect √
- * - Add enemy detection √
- * - Fix enemy damage √
- * - Fix enemy movement √
- * - Disable UI when game over √
- * - Fix player stuck in the ground √
- * - Fix objective miscount √
- * - Add sound effects 
+ * - Fix game controller not getting game data when going to the next level
+ * - Fix player wont die after dies once
+ * - Add winning door in boss fight
+ * - Add potion spawning in boss fight
+ * - Fix enemy spawning in boss fight
+ * - Fix game lagging after a long time
  */

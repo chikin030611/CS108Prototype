@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// TODO:
-// 1. Add victory screen
-// 2. Add potions spawning
-// 3. Fix enemy spawning
-
 // level recommendation: 3-5
 public class BossFight : MonoBehaviour
 {

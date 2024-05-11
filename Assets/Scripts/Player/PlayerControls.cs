@@ -121,19 +121,14 @@ public class PlayerControls : MonoBehaviour
         return gameObjectNames.ToArray();
     }
     
-    void Start()
+    void Awake()
     {
-        // Initialize Variables
-        _groundLayer = LayerMask.GetMask("Ground");
-        _respawnPoint = new Vector3(-26, -4, 0);
-        
         // Get GameController
         _gameController = GameObject.Find("GameController");
         if (_gameController != null)
         {
             _gameControllerScript = _gameController.GetComponent<GameController>();
             GameController.GameData gameData = GameController.gameData;
-            
             _maxHealth = gameData._maxHealth;
             _health = gameData._health;
             _maxKi = gameData._maxKi;
@@ -143,7 +138,13 @@ public class PlayerControls : MonoBehaviour
             _fireDamage = gameData._fireDamage;
             _iceFreezeTime = gameData._iceFreezeTime;
         }
-        
+    }
+    
+    void Start()
+    {
+        // Initialize Variables
+        _groundLayer = LayerMask.GetMask("Ground");
+        _respawnPoint = new Vector3(-26, -4, 0);
         
         // Get Components
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -152,7 +153,6 @@ public class PlayerControls : MonoBehaviour
         _damageCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         _groundCheck = GetComponent<CapsuleCollider2D>();
         _anim = GetComponent<Animator>();
-        // _voidCollider = GameObject.Find("Void Collider").GetComponent<BoxCollider2D>();
     }
     
     private void FixedUpdate()

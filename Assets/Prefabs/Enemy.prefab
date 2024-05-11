@@ -181,7 +181,7 @@ MonoBehaviour:
   moveSpeed: 3
   isFrozen: 0
   isFacingRight: 0
-  isFoundPlayer: 1
+  isFoundPlayer: 0
 --- !u!198 &3308086461212137434
 ParticleSystem:
   m_ObjectHideFlags: 0
