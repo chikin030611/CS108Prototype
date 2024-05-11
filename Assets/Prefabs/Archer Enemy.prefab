@@ -178,8 +178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  exp: 1
+  exp: 2
   moveSpeed: 3
+  isFrozen: 0
   isFacingRight: 0
   isFoundPlayer: 0
 --- !u!198 &3308086461212137434
@@ -4992,6 +4993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 4592859596603203965, guid: f1b90a6dc528c459ca0dd388a9f1ed65, type: 3}
+  shootingRate: 2
 --- !u!1 &3020793731041626046
 GameObject:
   m_ObjectHideFlags: 0

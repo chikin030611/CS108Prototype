@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  exp: 1
+  exp: 2
   moveSpeed: 3
   isFrozen: 0
   isFacingRight: 0
